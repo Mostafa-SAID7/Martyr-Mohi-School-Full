@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { api, CourseDto } from "@/lib/apiClient";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
-import { useAuth as useClerkAuth } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { useToast } from "@/hooks";
 
 const COURSE_PALETTES = [

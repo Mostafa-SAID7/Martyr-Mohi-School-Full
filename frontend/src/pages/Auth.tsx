@@ -1,4 +1,4 @@
-import { SignIn, SignUp } from "@clerk/react";
+import { SignIn, SignUp } from "@clerk/clerk-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Globe } from "lucide-react";

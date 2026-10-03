@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@clerk/react";
+import { useAuth } from "@clerk/clerk-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { api } from "@/lib/apiClient";
 import { Button } from "@/components/ui/button";
