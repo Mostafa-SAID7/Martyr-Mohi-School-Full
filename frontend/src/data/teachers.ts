@@ -5,8 +5,6 @@
  * Faculty information will be published when official school data becomes available.
  */
 
-import { COLORS } from "@/constants";
-
 export const TEACHERS = [] as const;
 
 /**

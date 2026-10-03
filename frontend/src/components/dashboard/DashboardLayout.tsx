@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, BookOpen, FileText, GraduationCap, LogOut,
-  User, Calendar, Users, MessageSquare, ChevronLeft, Menu, X,
+  Calendar, Users, MessageSquare, ChevronLeft, Menu,
   ClipboardList, BookMarked, Globe, PanelLeftClose, PanelLeftOpen,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";

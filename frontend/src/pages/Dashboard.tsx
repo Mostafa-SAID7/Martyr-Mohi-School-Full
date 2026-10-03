@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BookOpen, FileText, GraduationCap, ChevronLeft, Calendar, BookMarked, Users, MessageSquare, ClipboardList, TrendingUp } from "lucide-react";
+import { BookOpen, FileText, GraduationCap, ChevronLeft, Calendar, BookMarked, Users, MessageSquare, ClipboardList } from "lucide-react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 interface QuickCard { title: string; desc: string; icon: React.ElementType; href: string; color: string; }
 
 export default function Dashboard() {
-  const { fullName, isTeacher, isParent, isAdmin } = useAuth();
+  const { fullName, isTeacher, isParent } = useAuth();
   const { t, lang } = useLang();
 
   const studentCards: QuickCard[] = [

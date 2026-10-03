@@ -1,4 +1,4 @@
-import { Mail, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState } from "react";
 import { PublicNavbar } from "@/components/layout/PublicNavbar";
 import { Footer } from "@/components/layout/Footer";
@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { AppCard, AppCardHeader, AppCardTitle, AppCardDescription } from "@/components/common/AppCard";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 import { CONTACT_DETAILS } from "@/data";
 import { useLang } from "@/contexts/LanguageContext";
 

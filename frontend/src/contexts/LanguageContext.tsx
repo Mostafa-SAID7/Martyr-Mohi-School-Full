@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from "react
 import { ar, en } from "@/locales";
 
 type Lang = "ar" | "en";
-type Translations = typeof ar;
+type Translations = Record<string, string>;
 
 interface LangCtx {
   lang: Lang;
@@ -14,7 +14,7 @@ interface LangCtx {
 const LanguageContext = createContext<LangCtx>({
   lang: "ar",
   toggle: () => {},
-  t: ar,
+  t: ar as Translations,
   isRtl: true,
 });
 

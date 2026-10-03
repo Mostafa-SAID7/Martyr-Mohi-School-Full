@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLang } from "@/contexts/LanguageContext";
-import { Mail, Phone, MapPin, Heart } from "lucide-react";
+import { MapPin, Heart } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 export function Footer() {

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { coursesApi, CourseDto } from "@/services/api";
+import { coursesApi } from "@/services/api";
 import { useAuth } from "@clerk/react";
 
 /**

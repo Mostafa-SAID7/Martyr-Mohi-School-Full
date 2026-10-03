@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { profilesApi, ProfileDto } from "@/services/api";
+import { profilesApi } from "@/services/api";
 
 /**
  * Get user profile by ID

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { assignmentsApi, submissionsApi, AssignmentDto, SubmissionDto } from "@/services/api";
+import { assignmentsApi, submissionsApi } from "@/services/api";
 import { useAuth } from "@clerk/react";
 
 /**

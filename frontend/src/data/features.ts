@@ -3,7 +3,7 @@
  * Platform features and capabilities
  */
 
-import { BookOpen, Users, GraduationCap, Clock, Target, Eye, Heart } from "lucide-react";
+import { BookOpen, Users, GraduationCap, Clock, Target, Heart } from "lucide-react";
 import { COLORS, STATS } from "@/constants";
 
 export const FEATURES = [
