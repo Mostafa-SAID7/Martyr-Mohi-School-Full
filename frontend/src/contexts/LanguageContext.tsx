@@ -91,7 +91,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       } catch {
         // Ignore quota / private-mode failures; the language still applies.
       }
-    });
+    },
+    "lang",
+  );
   };
 
   return (

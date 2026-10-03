@@ -57,6 +57,11 @@
        with the rules at the bottom of this file. */
     --reveal-duration: 400ms;
     --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    /* Local feedback on the pressed button, which starts AFTER the page
+       reveal has settled (see the icon rules at the bottom of this file).
+       Read back by reveal-transition.ts so the class lifetime and the
+       animation itself can never drift apart. */
+    --reveal-icon-duration: 400ms;
     --reveal-x: 50vw;
     --reveal-y: 50vh;
     --reveal-r: 150vmax;
@@ -519,13 +524,25 @@ html.reveal-fallback *::after {
   transition-delay: 0s !important;
 }
 
-/* Sun <-> Moon swap on the nav button. React unmounts one glyph and mounts
-   the other, so this runs exactly once per toggle.
+/* ── Local feedback on the pressed button ───────────────────────────
+   Keyed on `html.reveal-icons-*`, which reveal-transition.ts adds ONLY once
+   the page reveal is visible: after `startViewTransition().finished`, or
+   immediately on the fallback path (where there is no snapshot at all).
 
-   Scoped to `.reveal-fallback` on purpose: that class only exists on the fallback
-   path. On the View Transitions path the live DOM is hidden behind a
-   snapshot, so an animation started here would be captured at 0% and the
-   icon would stay missing for the whole reveal. */
+   This is the whole point. These rules used to be gated on
+   `.reveal-fallback`, which only exists on the fallback path — so on every
+   browser that supports View Transitions the selectors never matched and the
+   toggle gave no local feedback whatsoever. Gating them on the *transition*
+   instead is not an option either: the live DOM is hidden behind the snapshot
+   for its whole duration, so an animation started when the state changes runs
+   unseen, and its 0% frame (`opacity: 0` below) is what gets photographed —
+   the icon then reads as missing for the entire reveal.
+
+   The two selectors stay separate so pressing one button never animates the
+   other button's glyph. */
+
+/* Sun <-> Moon swap. React unmounts one glyph and mounts the other, so a
+   fresh element is in place by the time the class is added. */
 @keyframes theme-icon-swap {
   0% {
     transform: rotate(-110deg) scale(0.3);
@@ -540,12 +557,15 @@ html.reveal-fallback *::after {
   }
 }
 
-html.reveal-fallback .theme-toggle-icon {
-  animation: theme-icon-swap 360ms var(--reveal-ease) both;
+html.reveal-icons-theme .theme-toggle-icon {
+  animation: theme-icon-swap var(--reveal-icon-duration) var(--reveal-ease)
+    both;
 }
-/* Globe spin on the language button. React keeps the same <Globe> element
-   across a language change, so the callers key it on `lang` to force a
-   remount — otherwise this animation would only run on first paint. */
+
+/* Globe spin on the language button. The callers key <Globe> on `lang`, so
+   the glyph is a new element every time; but even without that remount the
+   animation starts from a class that was not present a frame earlier, so it
+   plays on each press. */
 @keyframes lang-icon-spin {
   from {
     transform: rotate(0deg);
@@ -555,8 +575,8 @@ html.reveal-fallback .theme-toggle-icon {
   }
 }
 
-html.reveal-fallback .lang-toggle-icon {
-  animation: lang-icon-spin 420ms var(--reveal-ease) both;
+html.reveal-icons-lang .lang-toggle-icon {
+  animation: lang-icon-spin var(--reveal-icon-duration) var(--reveal-ease) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -572,8 +592,8 @@ html.reveal-fallback .lang-toggle-icon {
   html.reveal-fallback *::after {
     transition-duration: 1ms !important;
   }
-  html.reveal-fallback .theme-toggle-icon,
-  html.reveal-fallback .lang-toggle-icon {
+  html.reveal-icons-theme .theme-toggle-icon,
+  html.reveal-icons-lang .lang-toggle-icon {
     animation: none !important;
   }
 }

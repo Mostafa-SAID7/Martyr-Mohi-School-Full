@@ -91,7 +91,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const setTheme = (next: Theme, origin?: RevealOrigin) => {
     if (next === themeRef.current) return;
-    revealState(origin, next, setThemeState, commit);
+    revealState(origin, next, setThemeState, commit, "theme");
   };
 
   const toggleTheme = (origin?: RevealOrigin) =>
