@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Shield, CheckCircle, AlertCircle, Lock } from "lucide-react";
-import { useAuth as useClerkAuth } from "@clerk/clerk-react";
-import { SignIn } from "@clerk/clerk-react";
+import { useAuth as useClerkAuth } from "@clerk/react";
+import { SignIn } from "@clerk/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

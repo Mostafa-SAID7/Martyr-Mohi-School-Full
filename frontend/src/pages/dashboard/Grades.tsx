@@ -4,7 +4,7 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { api } from "@/lib/apiClient";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
-import { useAuth as useClerkAuth } from "@clerk/clerk-react";
+import { useAuth as useClerkAuth } from "@clerk/react";
 import { GraduationCap, TrendingUp, CheckCircle, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 

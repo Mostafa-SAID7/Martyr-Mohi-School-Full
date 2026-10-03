@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth as useClerkAuth } from "@clerk/clerk-react";
+import { useAuth as useClerkAuth } from "@clerk/react";
 import { useLang } from "@/contexts/LanguageContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { api, ProfileDto } from "@/lib/apiClient";
