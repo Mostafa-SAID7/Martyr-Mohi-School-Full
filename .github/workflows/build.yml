@@ -9,31 +9,44 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [20.x]
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
+      # This repo is two packages with no package.json at the root, so
+      # setup-node cannot fall back to a lock file in the repository root —
+      # it has to be pointed at the frontend manifest explicitly. Without
+      # cache-dependency-path the cache restore fails with "Dependencies lock
+      # file is not found" before any step runs.
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      
+          cache-dependency-path: frontend/package-lock.json
+
+      # Each run step needs the same working-directory: `npm ci` at the root
+      # would find no package.json either.
       - name: Install dependencies
         run: npm ci
-      
+        working-directory: frontend
+
       - name: Type check
         run: npm run typecheck
-      
+        working-directory: frontend
+
       - name: Build
         run: npm run build
-      
+        working-directory: frontend
+
+      # Vite's outDir is resolved relative to the package, so the bundle
+      # lands in frontend/dist — not dist/ at the repository root.
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/
+          path: frontend/dist
