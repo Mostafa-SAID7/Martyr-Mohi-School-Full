@@ -1,0 +1,61 @@
+# EditorConfig - Maintain consistent code style across editors
+# https://editorconfig.org
+
+root = true
+
+# All files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# JavaScript, TypeScript, JSX, TSX
+[*.{js,jsx,ts,tsx,mjs}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
+
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+indent_style = space
+indent_size = 2
+max_line_length = off
+
+# YAML
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Bash/Shell
+[*.{sh,bash}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+
+# Dockerfile
+[Dockerfile*]
+indent_style = space
+indent_size = 2
+
+# Package.json, package-lock.json, tsconfig.json
+[{package.json,package-lock.json,tsconfig*.json}]
+indent_style = space
+indent_size = 2
+
+# Prisma
+[*.prisma]
+indent_style = space
+indent_size = 2
+
+# Python (if used in scripts)
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 100

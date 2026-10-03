@@ -1,0 +1,49 @@
+# CODEOWNERS - Define who reviews and approves changes
+
+# Global owners - approve all changes
+* @Mostafa-SAID7
+
+# Frontend code
+/frontend/                    @Mostafa-SAID7
+/frontend/src/config/         @Mostafa-SAID7
+/frontend/src/data/           @Mostafa-SAID7
+/frontend/src/components/     @Mostafa-SAID7
+
+# Backend code  
+/backend/                     @Mostafa-SAID7
+/backend/src/                 @Mostafa-SAID7
+/backend/prisma/              @Mostafa-SAID7
+
+# Documentation
+/docs/                        @Mostafa-SAID7
+*.md                          @Mostafa-SAID7
+
+# GitHub configuration
+/.github/                     @Mostafa-SAID7
+
+# Configuration files
+/vercel.json                  @Mostafa-SAID7
+/.gitignore                   @Mostafa-SAID7
+/package.json                 @Mostafa-SAID7
+/tsconfig.json                @Mostafa-SAID7
+
+# School identity & data integrity
+/frontend/src/config/school.ts  @Mostafa-SAID7
+/frontend/src/data/             @Mostafa-SAID7
+/docs/DATA_INTEGRITY.md         @Mostafa-SAID7
+
+# Security & deployment
+/docs/SECURITY.md             @Mostafa-SAID7
+/docs/DEPLOYMENT.md           @Mostafa-SAID7
+/SECURITY.md                  @Mostafa-SAID7
+/LICENSE                      @Mostafa-SAID7
+
+# Changelog
+/CHANGELOG.md                 @Mostafa-SAID7
+
+---
+# Rules:
+# - Files matching patterns above require approval from specified owners
+# - If multiple patterns match, last one wins
+# - @ mentions owners (required for approval)
+# - Comments start with #

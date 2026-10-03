@@ -1,0 +1,16 @@
+# GitHub Issue Template Configuration
+# https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-template-routing
+
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/Mostafa-SAID7/Martyr-Mohi-School-Full/tree/main/docs
+    about: Read comprehensive documentation
+  
+  - name: Discussions
+    url: https://github.com/Mostafa-SAID7/Martyr-Mohi-School-Full/discussions
+    about: Ask questions and share ideas
+  
+  - name: Security Concerns
+    url: https://github.com/Mostafa-SAID7/Martyr-Mohi-School-Full/security/advisories
+    about: Report security vulnerabilities privately

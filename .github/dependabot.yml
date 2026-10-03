@@ -1,0 +1,67 @@
+# Dependabot configuration for automated dependency updates
+# https://docs.github.com/en/code-security/dependabot
+
+version: 2
+
+# npm dependencies
+updates:
+  # Check for npm updates weekly
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+    open-pull-requests-limit: 10
+    pull-request-branch-name:
+      separator: "/"
+    reviewers:
+      - "Mostafa-SAID7"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    allow:
+      - dependency-type: "production"
+      - dependency-type: "development"
+    ignore:
+      # Add any packages to ignore here
+      # - dependency-name: "package-name"
+
+  # Check backend dependencies
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+    open-pull-requests-limit: 10
+    pull-request-branch-name:
+      separator: "/"
+    reviewers:
+      - "Mostafa-SAID7"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+    reviewers:
+      - "Mostafa-SAID7"
+    commit-message:
+      prefix: "ci"
+
+# Configuration details:
+# - package-ecosystem: Type of dependencies to check
+# - directory: Where package files are located
+# - schedule.interval: How often to check (daily, weekly, monthly)
+# - schedule.day: Day to check (monday-sunday)
+# - schedule.time: Time to run (UTC)
+# - open-pull-requests-limit: Max open PRs from Dependabot
+# - reviewers: Auto-assign reviewers to PRs
+# - allow: What types of updates to allow
+# - ignore: Packages to skip updates for
