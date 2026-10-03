@@ -42,56 +42,64 @@ const Teachers = () => {
 
       <main className="flex-1 py-12">
         <div className="container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {TEACHERS.map((teacher, index) => (
-              <div
-                key={index}
-                className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-fade-in"
-                style={{ animationDelay: `${index * 70}ms` }}
-              >
-                {/* Gradient header */}
-                <div className={`relative h-24 bg-gradient-to-br ${teacher.color} flex items-end px-6 pb-0`}>
-                  <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
-                  {/* Avatar */}
-                  <div className="relative -mb-10 w-20 h-20 rounded-2xl border-4 border-card overflow-hidden shadow-lg">
-                    <img src={teacher.image} alt={teacher.name} loading="lazy" className="w-full h-full object-cover" />
+          {TEACHERS.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">
+                {lang === "ar" ? "سيتم نشر بيانات هيئة التدريس عند توفر مصدر رسمي" : "Faculty information will be published when official school data becomes available"}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {TEACHERS.map((teacher: any, index: number) => (
+                <div
+                  key={index}
+                  className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-fade-in"
+                  style={{ animationDelay: `${index * 70}ms` }}
+                >
+                  {/* Gradient header */}
+                  <div className={`relative h-24 bg-gradient-to-br ${teacher.color} flex items-end px-6 pb-0`}>
+                    <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "20px 20px" }} />
+                    {/* Avatar */}
+                    <div className="relative -mb-10 w-20 h-20 rounded-2xl border-4 border-card overflow-hidden shadow-lg">
+                      <img src={teacher.image} alt={teacher.name} loading="lazy" className="w-full h-full object-cover" />
+                    </div>
+                  </div>
+
+                  <div className="pt-12 px-6 pb-6">
+                    <div className="flex items-start justify-between mb-1">
+                      <div>
+                        <h3 className="font-bold text-foreground text-lg group-hover:text-primary transition-colors">
+                          {lang === "ar" ? teacher.name : teacher.nameEn}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {lang === "ar" ? teacher.subject : teacher.subjectEn}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-50 border border-amber-200">
+                        <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                        <span className="text-xs font-bold text-amber-700">{teacher.rating}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1.5">
+                        <BookOpen className="h-4 w-4 text-primary" />
+                        <span>{teacher.courses} {lang === "ar" ? "مقرر" : "courses"}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Users className="h-4 w-4 text-primary" />
+                        <span>{teacher.students} {lang === "ar" ? "طالب" : "students"}</span>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 px-3 py-2 rounded-xl bg-muted/60 text-xs text-muted-foreground text-center">
+                      {lang === "ar" ? `خبرة ${teacher.experience} في التدريس` : `${teacher.experienceEn} of teaching experience`}
+                    </div>
                   </div>
                 </div>
-
-                <div className="pt-12 px-6 pb-6">
-                  <div className="flex items-start justify-between mb-1">
-                    <div>
-                      <h3 className="font-bold text-foreground text-lg group-hover:text-primary transition-colors">
-                        {lang === "ar" ? teacher.name : teacher.nameEn}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {lang === "ar" ? teacher.subject : teacher.subjectEn}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-50 border border-amber-200">
-                      <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
-                      <span className="text-xs font-bold text-amber-700">{teacher.rating}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1.5">
-                      <BookOpen className="h-4 w-4 text-primary" />
-                      <span>{teacher.courses} {lang === "ar" ? "مقرر" : "courses"}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Users className="h-4 w-4 text-primary" />
-                      <span>{teacher.students} {lang === "ar" ? "طالب" : "students"}</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 px-3 py-2 rounded-xl bg-muted/60 text-xs text-muted-foreground text-center">
-                    {lang === "ar" ? `خبرة ${teacher.experience} في التدريس` : `${teacher.experienceEn} of teaching experience`}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </main>
       <Footer />

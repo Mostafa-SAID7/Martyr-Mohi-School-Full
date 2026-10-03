@@ -50,7 +50,7 @@ const Spinner = () => (
 
 export default function App() {
   return (
-    <ClerkProvider publishableKey={CLERK_KEY} afterSignOutUrl="/" appearance={{ theme: dark }}>
+    <ClerkProvider publishableKey={CLERK_KEY} afterSignOutUrl="/">
       <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <TooltipProvider>
