@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
-@import '@clerk/ui/themes/shadcn.css';
 
 @layer base {
   :root {
