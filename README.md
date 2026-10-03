@@ -40,18 +40,14 @@ cd frontend
 npm run build
 ```
 
-### Deploy to Netlify
-
-1. Connect repo to [Netlify](https://netlify.com)
-2. Set build command: `npm run build`
-3. Set publish directory: `dist`
-4. Add environment variable `VITE_CLERK_PUBLISHABLE_KEY`
-
 ### Deploy to Vercel
 
 1. Connect repo to [Vercel](https://vercel.com)
-2. Add environment variable `VITE_CLERK_PUBLISHABLE_KEY`
-3. Deploy
+2. Add environment variables:
+   - `VITE_CLERK_PUBLISHABLE_KEY` - Your Clerk public key
+   - `VITE_API_URL` - Backend API URL (e.g., https://api.your-domain.com)
+3. Vercel will automatically detect the build configuration from `vercel.json`
+4. Deploy
 
 ## ⚙️ Configuration
 
