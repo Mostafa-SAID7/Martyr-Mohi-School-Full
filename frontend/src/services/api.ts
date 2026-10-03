@@ -1,10 +1,16 @@
 /**
  * Centralized API Client
- * All communication with backend goes through this module
- * Backend runs at http://localhost:3000/api
+ * All communication with backend goes through this module.
+ *
+ * The API is same-origin (`/api`) in every environment:
+ *  - dev:    the Vite dev server proxies /api -> localhost:3000 (vite.config.ts)
+ *  - prod:   vercel.json routes /api/* to the backend service
+ * Set VITE_API_BASE_URL only when the API lives on a different origin.
  */
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/api`;
 
 interface RequestOptions extends RequestInit {
   token?: string;

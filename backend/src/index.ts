@@ -19,6 +19,12 @@ import scheduleRoutes from "@/routes/schedule";
 import messagesRoutes from "@/routes/messages";
 import parentRoutes from "@/routes/parent";
 
+// Validate as soon as the module loads. Locally `start()` still calls this
+// before listening. On Vercel the app is imported rather than run as the main
+// module, so `start()` never executes -- this is the only place a missing
+// variable would surface instead of failing later on a request.
+validateConfig();
+
 const app = express();
 
 // ============================================================================

@@ -1,328 +1,234 @@
 # Deployment Guide
 
-## Frontend Deployment (Vercel)
+The app deploys to Vercel as **one project with two services**: a Vite frontend
+and an Express backend, sharing a single domain.
 
-### Prerequisites
+```
+                       vercel.json (top level)
+                     ┌────────────────────────┐
+  /api/*  ──────────►│  service "backend"     │  backend/
+  /health ──────────►│    framework: express  │
+                     └────────────────────────┘
+                     ┌────────────────────────┐
+  everything else ──►│  service "frontend"    │  frontend/
+                     │    framework: vite     │
+                     └────────────────────────┘
+```
+
+Because `/api` is served from the **same origin** as the site, there is no CORS
+configuration to maintain in production.
+
+---
+
+## How routing works
+
+| Request            | Handled by  | Notes                                    |
+| ------------------ | ----------- | ---------------------------------------- |
+| `GET /api/courses` | backend     | original path is preserved (`/api/...`)  |
+| `GET /health`      | backend     | uptime probe                             |
+| `GET /courses`     | frontend    | falls back to `index.html` (SPA routing) |
+| `GET /assets/x.js` | frontend    | served from CDN, immutable cache         |
+
+Three rules make this work, in `vercel.json`:
+
+1. **Top-level rewrites** route `/api/*` and `/health` to the backend service,
+   and everything else to the frontend. Evaluation order matters — `/api/*` is
+   listed first.
+2. **A service-scoped rewrite inside `frontend`** maps unmatched paths to
+   `/index.html`. This is mandatory: Vercel resolves every URL as a filesystem
+   path, so without it a hard refresh on `/courses` or `/faq` returns a 404.
+   Static files are checked *before* rewrites, so assets are unaffected.
+3. Routing into a service is **final** — Vercel does not fall back across
+   services, which is why rule 2 has to live inside the frontend service.
+
+---
+
+## Prerequisites
+
 - Vercel account
-- GitHub repository connected
-- Clerk API keys configured
+- GitHub repository connected to Vercel
+- Supabase project (PostgreSQL)
+- Clerk application
 
-### Environment Variables
+---
 
-Create in Vercel dashboard:
+## Environment variables
+
+Add these in **Vercel → Project → Settings → Environment Variables**. They must
+be set there: `frontend/.env` is gitignored, so Vercel never sees it.
+
+### Frontend service (`frontend/`)
+
+| Name                          | Required | Notes                                             |
+| ----------------------------- | -------- | ------------------------------------------------- |
+| `VITE_CLERK_PUBLISHABLE_KEY`  | **yes**  | No fallback in `App.tsx` — unset means Clerk fails |
+
+`VITE_API_URL` / `VITE_API_BASE_URL` are **not** needed in production. Both API
+clients default to same-origin `/api`, which `vercel.json` routes to the backend.
+The Vite dev server proxies `/api` locally (see `vite.config.ts`).
+
+### Backend service (`backend/`)
+
+| Name                 | Required | Notes                                                    |
+| -------------------- | -------- | -------------------------------------------------------- |
+| `DATABASE_URL`       | **yes**  | Use the **pooled** Supabase string (port `6543`)         |
+| `CLERK_SECRET_KEY`   | **yes**  | `sk_live_...` in production                              |
+| `SUPABASE_URL`       | **yes**  |                                                          |
+| `SUPABASE_ANON_KEY`  | **yes**  |                                                          |
+| `FRONTEND_URL`       | no       | Only used by the CORS allowlist                          |
+| `NODE_ENV`           | no       | Vercel sets `production`                                 |
+
+These four are enforced at startup — `validateConfig()` in `backend/src/index.ts`
+throws and names any that are missing, so a misconfigured deploy fails loudly in
+the function logs instead of erroring per-request.
+
+> **⚠️ Use the pooled connection string.** Serverless functions open and close
+> connections constantly. The direct Supabase string (port `5432`) will exhaust
+> the connection limit under even light traffic. In Supabase → Settings →
+> Database, copy the **Pooler** URL (`...@aws-0...pooler.supabase.com:6543/...`).
+> Use `pgbouncer=true` in the query string.
+
+---
+
+## Deployment steps
+
+1. **Import the repository** at [vercel.com/new](https://vercel.com/new).
+2. **Set the Framework Preset to Services — this is required and is NOT
+   automatic.**
+
+   Project → Settings → Build & Deployment → Framework Preset → **Services**
+
+   Vercel builds as services only when *both* this setting is selected *and*
+   `vercel.json` contains a `services` key. If either is missing, Vercel falls
+   back to default framework detection and **silently ignores the services
+   configuration** — with no root `package.json`, that fails during install.
+   Redeploy after changing it.
+3. **Add the environment variables** listed above.
+4. **Deploy.** Pushing to `main` redeploys automatically; pull requests create
+   preview deployments.
+
+### What each service builds
+
+| Service   | Framework | Build command     | Output      |
+| --------- | --------- | ----------------- | ----------- |
+| frontend  | `vite`    | `npm run build`   | `dist/`     |
+| backend   | `express` | `prisma generate` | functions   |
+
+The backend's `buildCommand` is deliberately `prisma generate` and **not** the
+`build` script (`tsc`), which currently fails typechecking. The TypeScript is
+transpiled by Vercel without typechecking, so those errors don't block a deploy
+— but they should still be fixed (see *Known issues*).
+
+---
+
+## Local development
+
+Unchanged by any of the above. Same-origin `/api` works locally because
+`vite.config.ts` proxies it:
+
 ```
-VITE_CLERK_PUBLISHABLE_KEY=pk_live_your_clerk_key
-VITE_API_URL=https://your-backend-domain.com/api
+frontend  http://localhost:5173
+backend   http://localhost:3000   (proxied from /api)
 ```
-
-### Deployment Steps
-
-1. **Connect Repository**
-   - Go to [Vercel](https://vercel.com)
-   - Click "Import Project"
-   - Select GitHub repository
-   - Click "Import"
-
-2. **Configure Build**
-   - Root Directory: `frontend`
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-   - Install Command: `npm install`
-
-3. **Add Environment Variables**
-   - In "Environment Variables" section
-   - Add `VITE_CLERK_PUBLISHABLE_KEY`
-   - Add `VITE_API_URL`
-
-4. **Deploy**
-   - Click "Deploy"
-   - Wait for build to complete (~3 minutes)
-   - Vercel provides live URL
-
-### Automatic Deployments
-
-- Main branch: Deployed automatically
-- Pull requests: Preview deployments created
-- Rollbacks: Available from Vercel dashboard
-
-### Testing Deployment
 
 ```bash
-npm run build    # Test build locally
-npm run preview  # Preview production build
+# frontend
+cd frontend && npm install && npm run dev
+
+# backend
+cd backend && npm install && npx prisma generate && npm run dev
 ```
 
-## Backend Deployment (Optional)
+---
 
-### Host Options
+## Verification checklist
 
-1. **Railway**
-   - Simple deployment
-   - PostgreSQL database
-   - Good for MVP
+- [ ] Framework Preset is set to **Services** (or the services config is ignored)
+- [ ] Site loads and Clerk sign-in works
+- [ ] **Hard refresh on a deep link** (e.g. `/courses`) renders — not a 404
+- [ ] `GET https://<your-domain>/health` returns `{"success":true,...}`
+- [ ] Authenticated dashboard pages load data
+- [ ] Language and theme toggles work
+- [ ] No `Cannot find module '@/...'` in the backend function logs
+- [ ] `.env` is not committed (`git ls-files | grep -c '\.env$'` → 0)
 
-2. **Render**
-   - Free tier available
-   - PostgreSQL support
-   - Easy scaling
-
-3. **Self-hosted**
-   - Digital Ocean
-   - AWS
-   - More control
-
-### Environment Variables
-
-Required for backend:
-```
-DATABASE_URL=postgresql://user:pass@host/db
-CLERK_SECRET_KEY=sk_test_your_secret_key
-NODE_ENV=production
-PORT=3000
-API_BASE_URL=https://your-backend-domain.com
-FRONTEND_URL=https://your-frontend-domain.com
-```
-
-### Deployment Steps (Railway Example)
-
-1. Create Railway account
-2. Connect GitHub repository
-3. Railway auto-detects Node.js project
-4. Configure environment variables
-5. Deploy automatically
-6. Get production backend URL
-
-## Database (Supabase)
-
-### Already Configured ✅
-
-- PostgreSQL managed by Supabase
-- Automatically backed up
-- Connection string in DATABASE_URL
-
-### No Additional Setup Needed
-
-Supabase handles:
-- Database hosting
-- Automatic backups
-- Scaling
-- Security
-
-## Domain Configuration
-
-### Frontend Domain
-
-1. Purchase domain (Namecheap, GoDaddy)
-2. In Vercel settings → Domains
-3. Add custom domain
-4. Update DNS records per Vercel instructions
-5. SSL certificate auto-configured
-
-### Backend Domain (Optional)
-
-If deploying backend:
-1. Purchase domain
-2. Point to backend hosting (Railway, Render, etc.)
-3. SSL configured automatically
-
-### DNS Configuration
-
-For both frontend and backend:
-```
-CNAME: your-domain.com → vercel-domain.vercel.app
-```
-
-(Specific instructions vary by host)
-
-## Production Checklist
-
-### Frontend
-- [ ] Environment variables set in Vercel
-- [ ] VITE_API_URL points to backend
-- [ ] Clerk keys are production keys (pk_live_)
-- [ ] Domain configured
-- [ ] SSL working (https://)
-- [ ] API calls working in production
-
-### Backend (if deployed separately)
-- [ ] Environment variables configured
-- [ ] DATABASE_URL correct
-- [ ] CLERK_SECRET_KEY set
-- [ ] NODE_ENV=production
-- [ ] Health check endpoint working
-- [ ] Database migrations ran
-- [ ] CORS configured for frontend domain
-
-### General
-- [ ] No sensitive data in code
-- [ ] .env file not committed
-- [ ] Error logging enabled
-- [ ] Monitoring configured
-
-## Monitoring
-
-### Vercel Analytics
-
-- Built-in to Vercel
-- Real-time performance metrics
-- Error tracking
-- Function logs
-
-### Manual Monitoring
-
-Check health endpoint:
-```bash
-curl https://your-backend-domain.com/health
-```
-
-Should return:
-```json
-{"status": "ok"}
-```
-
-## Rollback Procedure
-
-### Frontend (Vercel)
-
-1. Go to Vercel dashboard
-2. Select deployment
-3. Previous deployments listed
-4. Click deployment to revert
-5. Confirms: "Rollback to [date]"
-
-### Backend
-
-Depends on host:
-- Railway: Similar UI for rollback
-- Render: View deployment history, redeploy previous
-
-## Scaling
-
-### Frontend
-
-Vercel automatically scales:
-- No configuration needed
-- Increased concurrency as needed
-- Auto-caching optimized
-
-### Backend
-
-If performance needed:
-- Railway/Render: Upgrade plan
-- Self-hosted: Add load balancer or horizontal scaling
-
-### Database
-
-Supabase auto-scales:
-- No manual intervention needed
-- Connection pooling automatic
+---
 
 ## Troubleshooting
 
-### 502 Bad Gateway
+### 404 on refresh or direct navigation
 
-- Backend might be down
-- Check backend health endpoint
-- Verify environment variables
+The frontend SPA fallback rewrite is missing or not applied. Confirm
+`vercel.json` is **committed to Git** — an untracked `vercel.json` produces no
+error, the rewrites simply never apply.
 
-### API Not Responding
+### Backend: `Cannot find module '@/config/index'`
 
-- Check VITE_API_URL in Vercel
-- Ensure backend domain correct
-- Verify CORS configured
+The backend uses TypeScript path aliases (`@/*`, see `backend/tsconfig.json`),
+which TypeScript does **not** rewrite in emitted JavaScript. If Vercel's
+resolver doesn't pick them up from `tsconfig.json`, this appears at runtime on
+the first API call.
 
-### Database Connection Error
+Fix (if it occurs): precompile so no aliases survive, and point the service at
+the output — `tsc --noCheck && tsc-alias` for the build, plus
+`"entrypoint": "dist/index.js"` on the backend service.
 
-- Check DATABASE_URL
-- Verify Supabase project active
-- Check connection limits
+### 401 / Clerk errors on the frontend
 
-### Clerk Authentication Not Working
+`VITE_CLERK_PUBLISHABLE_KEY` is missing or is a `pk_test_` key in production.
+Vite inlines env vars at build time — changing one requires a **redeploy**.
 
-- Verify VITE_CLERK_PUBLISHABLE_KEY
-- Check Clerk production configuration
-- Ensure allowed origins include frontend domain
+### Database connection errors
 
-## Security
+- Wrong string: confirm port `6543` (pooled), not `5432` (direct)
+- Supabase project paused — resume it from the Supabase dashboard
+- Connection limit reached — check Supabase → Database → Usage
 
-### Secrets Management
+### API returns 404
 
-- Never commit .env files
-- Use Vercel's environment variables UI
-- Rotate Clerk keys periodically
-- Use production keys in production
+The request isn't reaching the backend service. Confirm the `/api/:path*` rewrite
+is still the **first** entry in the top-level `rewrites` array.
 
-### HTTPS
+---
 
-- Vercel: Auto-configured SSL
-- Custom domains: SSL configured automatically
-- No HTTP traffic to production
+## Known issues
 
-### CORS
+Tracked here so they aren't rediscovered during an incident:
 
-Configured in backend for:
-- Your frontend domain
-- Localhost (development only)
-- No wildcards in production
+- **20 pre-existing type errors in `backend/`** (`npm run typecheck` exits 2)
+  across `AuthService`, `ProfileService`, `EnrollmentService`, `MessageService`,
+  `ParentService`, `ScheduleService` — DTO mismatches against `@/types/index`
+  (e.g. `ProfileDto` wants `name/email/role` but services return
+  `fullName/avatarUrl`; `CreateScheduleEntryRequest` is not exported). They do
+  not block deployment but they are untested contract drift between the
+  frontend's types and the backend's.
+- **Backend CORS allowlist** contains only `config.FRONTEND_URL` + localhost.
+  This is harmless today because `/api` is same-origin, but add your domain if
+  the API is ever served from a different origin.
 
-## Performance Optimization
+---
 
-### Frontend
+## Domain
 
-- Already optimized:
-  - Vite tree-shaking
-  - Image optimization via CDN
-  - Code splitting
-  - Gzip compression
+1. Vercel → Project → Settings → Domains → Add
+2. Update DNS records as Vercel instructs
+3. SSL is configured automatically
 
-### API
+No separate backend domain is needed — both services share one origin.
 
-- Consider:
-  - Response caching headers
-  - Database query optimization
-  - Request batching
+---
 
-## Continuous Deployment
+## Rollback
 
-### GitHub Integration
+Vercel → Deployments → select a previous deployment → **Instant Rollback**.
 
-- Push to main → Vercel deploys
-- Pull requests → Preview deployments
-- No manual deployment step needed
+---
 
-### Build Notifications
+## Monitoring
 
-- Slack integration available
-- Email notifications from Vercel
-- GitHub status checks
+```bash
+curl https://<your-domain>/health
+```
 
-## Post-Deployment
-
-### After First Deployment
-
-1. Test all major user flows
-2. Verify API connectivity
-3. Check error logs
-4. Monitor performance
-5. Share with stakeholders
-
-### Maintenance
-
-- Weekly: Check error logs
-- Monthly: Review performance metrics
-- Quarterly: Security audit
-- Yearly: Plan upgrades
-
-## Support
-
-### Vercel Support
-- Documentation: https://vercel.com/docs
-- Help: https://vercel.com/support
-
-### Supabase Support
-- Documentation: https://supabase.com/docs
-- Support: https://supabase.com/support
-
-### Clerk Support
-- Documentation: https://clerk.com/docs
-- Support: https://clerk.com/support
+Vercel → Observability shows invocation counts, error rates, and duration per
+path for the backend function.
