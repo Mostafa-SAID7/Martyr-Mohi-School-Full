@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BookOpen, FileText, GraduationCap, ChevronLeft, Calendar, BookMarked, Users, MessageSquare, ClipboardList } from "lucide-react";
+import { BookOpen, FileText, GraduationCap, Calendar, BookMarked, Users, MessageSquare, ClipboardList, ChevronRight } from "lucide-react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
@@ -69,7 +69,7 @@ export default function Dashboard() {
             <p className="text-sm text-muted-foreground mb-4">{card.desc}</p>
             <span className="inline-flex items-center gap-1 text-xs text-primary font-medium">
               {lang === "ar" ? "فتح" : "Open"}
-              <ChevronLeft className="h-3.5 w-3.5" />
+              <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />
             </span>
           </Link>
         ))}

@@ -1,4 +1,4 @@
-import { GraduationCap } from "lucide-react";
+﻿import { GraduationCap } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { FEATURES } from "@/data";
 
@@ -8,7 +8,7 @@ export function FeaturesSection() {
     <section className="py-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background pointer-events-none" />
 
-      <div className="container relative">
+      <div className="shell relative">
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-5">
             <GraduationCap className="h-4 w-4" />

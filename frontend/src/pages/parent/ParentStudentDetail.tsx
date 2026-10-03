@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useAuth as useClerkAuth } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { useLang } from "@/contexts/LanguageContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { api, GradeDto, CourseDto } from "@/lib/apiClient";
@@ -53,7 +53,7 @@ export default function ParentStudentDetail() {
         {/* Back */}
         <Link to="/parent">
           <Button variant="ghost" size="sm" className="gap-1">
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
             {lang === "ar" ? "العودة" : "Back"}
           </Button>
         </Link>

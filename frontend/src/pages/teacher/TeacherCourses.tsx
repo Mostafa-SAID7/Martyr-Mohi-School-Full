@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useAuth as useClerkAuth } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { api, CourseDto } from "@/lib/apiClient";
 import { Link } from "react-router-dom";
-import { BookOpen, Plus, ChevronLeft, Users, FileText, Edit2, GraduationCap } from "lucide-react";
+import { BookOpen, Plus, Users, FileText, Edit2, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

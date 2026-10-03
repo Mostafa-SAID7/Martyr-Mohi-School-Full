@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
+/* shadcn's components (`animate-in`, `fade-in-0`, `zoom-in-95`, `animate-out`,
+   `slide-in-from-*`) all come from tw-animate-css. It was in package.json but
+   never imported, so every Radix surface — tooltip, dropdown, dialog, hover
+   card — mounted and unmounted with no transition at all. */
+@import "tw-animate-css";
+@config "../tailwind.config.ts";
 
 @layer base {
   :root {
+    color-scheme: light;
+
     --trinidad-50: 28 100% 97%;
     --trinidad-100: 30 90% 92%;
     --trinidad-200: 28 85% 83%;
@@ -34,7 +42,64 @@
     --border: var(--trinidad-200);
     --input: var(--trinidad-200);
     --ring: var(--trinidad-500);
+
+    /* Scrollbar is themed separately from the trinidad scale so it can follow
+       the mode. Without these, `.dark` left the track on the light peach
+       --trinidad-100 while the page behind it went dark. */
+    --scrollbar-track: var(--trinidad-100);
+    --scrollbar-thumb: var(--trinidad-400);
+    --scrollbar-thumb-hover: var(--trinidad-600);
+
     --radius: 0.75rem;
+
+    /* Reveal animation shared by the theme AND language toggles. Duration
+       lives in CSS so reveal-transition.ts reads it back and stays in sync
+       with the rules at the bottom of this file. */
+    --reveal-duration: 400ms;
+    --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --reveal-x: 50vw;
+    --reveal-y: 50vh;
+    --reveal-r: 150vmax;
+  }
+
+  /* ── Dark theme ──────────────────────────────────────────────────
+     Tokens keep the same bare "H S% L%" triplet shape as :root, so the
+     existing `hsl(var(--token))` consumers work unchanged.
+
+     Every pairing below was verified against WCAG: 4.5:1 for text,
+     3:1 for borders / rings / focus. `primary` moves to a *lighter*
+     orange in dark mode because it is used both as a button fill and
+     as text on cards, and only a light tone clears 4.5:1 on the dark
+     card colour.
+     ────────────────────────────────────────────────────────────── */
+  .dark {
+    color-scheme: dark;
+
+    --background: var(--trinidad-950);
+    --foreground: var(--trinidad-50);
+    --card: var(--trinidad-900);
+    --card-foreground: var(--trinidad-50);
+    --popover: var(--trinidad-900);
+    --popover-foreground: var(--trinidad-50);
+    --primary: var(--trinidad-300);
+    --primary-foreground: var(--trinidad-950);
+    --secondary: var(--trinidad-800);
+    --secondary-foreground: var(--trinidad-50);
+    --muted: var(--trinidad-800);
+    --muted-foreground: var(--trinidad-300);
+    --accent: var(--trinidad-800);
+    --accent-foreground: var(--trinidad-50);
+    --destructive: 0 65% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--trinidad-500);
+    --input: var(--trinidad-500);
+    --ring: var(--trinidad-300);
+
+    /* Track matches the page background so it reads as seamless; thumb sits at
+       4.39:1 against it (WCAG non-text target is 3:1). */
+    --scrollbar-track: var(--trinidad-950);
+    --scrollbar-thumb: var(--trinidad-600);
+    --scrollbar-thumb-hover: var(--trinidad-500);
   }
 
   * {
@@ -42,8 +107,16 @@
   }
 
   html {
-    direction: rtl;
+    /* Direction is driven by the `dir` attribute (set on <html> in index.html and
+       updated by LanguageContext). It must NOT be hard-coded here: an author
+       `direction` declaration overrides the `dir` attribute, which pinned the
+       whole app to RTL and made every logical utility (ps-*, start-*, ms-*, …)
+       keep resolving right-to-left even after switching to English. */
     scroll-behavior: smooth;
+    /* Both headers are `sticky top-0` (h-16 public / h-14 dashboard).
+       Without this, anything scrolled into view — anchors, focused inputs,
+       validation errors — lands underneath them. */
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -54,25 +127,65 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* ── Scrollbar ────────────────────────────────────────────────
+     Only ONE styling system may target a given scrollbar.
+
+     Chromium 121+ implements the standard `scrollbar-width` /
+     `scrollbar-color` properties. As soon as either is set, Chromium
+     switches that scroller to its NATIVE rendering and silently ignores
+     every `::-webkit-scrollbar*` rule. Verified in Chrome 152:
+
+       ::-webkit-scrollbar only .................. 30px  (rules applied)
+       + * { scrollbar-width: thin } ............ 10px  (webkit ignored)
+
+     So a blanket `* { scrollbar-width: thin }` also brings back the
+     Windows arrow buttons and `::-webkit-scrollbar-button` can no longer
+     hide them. The webkit rules below are therefore the single source of
+     truth, and the standard properties are quarantined behind a
+     `@supports` query that is true only where webkit pseudo-elements do
+     not exist (Firefox).
+     ──────────────────────────────────────────────────────────── */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
+
+  /* Chromium draws arrow buttons at both ends of every scrollbar by
+     default. This is the rule that actually removes them. */
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
   ::-webkit-scrollbar-track {
-    background: hsl(var(--trinidad-100));
+    background: hsl(var(--scrollbar-track));
     border-radius: 9999px;
   }
+
+  /* The transparent border + padding-box clip keeps the rounded thumb from
+     filling the whole track width when the scrollbar is short. */
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--trinidad-400));
+    background: hsl(var(--scrollbar-thumb));
+    border: 2px solid transparent;
+    background-clip: padding-box;
     border-radius: 9999px;
-    transition: background 0.2s;
   }
+
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--trinidad-600));
+    background: hsl(var(--scrollbar-thumb-hover));
+    background-clip: padding-box;
   }
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: hsl(var(--trinidad-400)) hsl(var(--trinidad-100));
+
+  /* Firefox: no ::-webkit-scrollbar support, so the standard properties are
+     safe there — and Firefox scrollbars never draw arrow buttons anyway. */
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: hsl(var(--scrollbar-thumb)) hsl(var(--scrollbar-track));
+    }
   }
 
   ::selection {
@@ -80,8 +193,11 @@
     color: hsl(var(--trinidad-900));
   }
 
+  /* `--ring` is the token reserved for exactly this and is already themed
+     (trinidad-500 light, trinidad-300 dark), so one rule serves both
+     palettes. Hardcoding the ramp directly would need a `.dark` override. */
   :focus-visible {
-    outline: 2px solid hsl(var(--trinidad-500));
+    outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
   }
 }
@@ -149,6 +265,86 @@
 }
 
 @layer components {
+  /* ─────────────────────────────────────────────────────────────
+     Centralised page shell.
+
+     Replaces Tailwind's built-in `container`, which is unusable here:
+       • it ships no horizontal gutters (content hit the screen edge)
+       • it does NOT centre (margin-inline stayed 0 at every width),
+         so on wide screens all slack piled up on one side
+       • its max-width ladder is erratic — 1280px at 1440 but 1536px
+         at 1600, a 256px jump, and it keeps growing to 1536px at 1920
+
+     One rule now governs width for every page, and because it lives in
+     `components` (not `utilities`), a `max-w-*` utility on the same element
+     still wins — which is what the narrow reading pages (FAQ/Help/Privacy)
+     rely on.
+     ───────────────────────────────────────────────────────────── */
+  .shell {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 80rem; /* 1280px */
+    padding-inline: 1rem;
+  }
+  @media (width >= 40rem) {
+    .shell {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (width >= 64rem) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+  @media (width >= 96rem) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* ── Header mobile menu ─────────────────────────────────────────────
+     It is absolutely positioned under the bar, so it never grows the
+     header — the scroll region below keeps its height and nothing jumps
+     when it opens. That is also why it is *always mounted* rather than
+     conditionally rendered: a conditional render can only ever animate
+     the opening, and the user asked for the closing too.
+
+     `visibility` is the part that needs care. It is a discrete property,
+     so a normal transition flips it at the halfway mark, which would cut
+     the fade short and leave the menu sitting there mid-opacity. It is
+     therefore delayed by exactly the fade duration on close and left
+     undelayed on open. Hiding it this way (rather than `opacity: 0`)
+     is also what keeps it out of the tab order and out of screen
+     readers while closed.
+     ──────────────────────────────────────────────────────────────── */
+  .nav-dropdown {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem) scale(0.97);
+    transform-origin: top center;
+    pointer-events: none;
+    transition:
+      opacity 180ms ease-out,
+      transform 180ms ease-out,
+      visibility 0s linear 180ms;
+  }
+  .nav-dropdown.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition:
+      opacity 240ms var(--reveal-ease),
+      transform 240ms var(--reveal-ease),
+      visibility 0s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-dropdown,
+    .nav-dropdown.is-open {
+      transition: none;
+    }
+  }
+
   .section-header {
     text-align: center;
     margin-bottom: 3rem;
@@ -251,4 +447,133 @@
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Toggle reveal — shared by the theme toggle AND the language toggle
+
+   Two paths, chosen at runtime by src/lib/reveal-transition.ts:
+
+   1. View Transitions API (preferred). The browser rasterises the old page
+      and the new page into two images and animates only those. No live
+      element is repainted or re-laid-out per frame — that is what makes it
+      both smooth and cheap. The new image is revealed by a circle growing
+      out of the exact point the user clicked.
+
+   2. Fallback. A `.reveal-fallback` class is hung on <html> for one duration so
+      that ONLY paint properties transition (colour, background, border,
+      fill, stroke, shadow, outline). Layout properties are deliberately
+      excluded: animating them would force a reflow on every frame, which is
+      precisely the jank this avoids.
+
+   Both honour prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  /* The UA default cross-fades both snapshots. We want the old one to stay
+     opaque underneath while the circle grows over it, so neither fades. */
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 0;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+  animation: reveal-circle var(--reveal-duration) var(--reveal-ease) both;
+}
+
+/* --reveal-r is always the farthest corner from --reveal-x/y (set in JS), so
+   the circle fully covers the viewport and nothing of the old theme shows
+   through once it lands. Both keyframes use <length> radii so they interpolate. */
+@keyframes reveal-circle {
+  from {
+    clip-path: circle(0px at var(--reveal-x) var(--reveal-y));
+  }
+  to {
+    clip-path: circle(var(--reveal-r) at var(--reveal-x) var(--reveal-y));
+  }
+}
+
+/* ── Fallback path ─────────────────────────────────────────────────────
+   Unlayered, so it beats Tailwind's @layer utilities without needing
+   !important on every declaration. Present only for ~duration + 80ms. */
+html.reveal-fallback,
+html.reveal-fallback *,
+html.reveal-fallback *::before,
+html.reveal-fallback *::after {
+  transition:
+    background-color var(--reveal-duration) var(--reveal-ease),
+    border-color var(--reveal-duration) var(--reveal-ease),
+    color var(--reveal-duration) var(--reveal-ease),
+    fill var(--reveal-duration) var(--reveal-ease),
+    stroke var(--reveal-duration) var(--reveal-ease),
+    outline-color var(--reveal-duration) var(--reveal-ease),
+    text-decoration-color var(--reveal-duration) var(--reveal-ease),
+    caret-color var(--reveal-duration) var(--reveal-ease),
+    box-shadow var(--reveal-duration) var(--reveal-ease) !important;
+  /* A staggered entrance delay would otherwise hold colours back. */
+  transition-delay: 0s !important;
+}
+
+/* Sun <-> Moon swap on the nav button. React unmounts one glyph and mounts
+   the other, so this runs exactly once per toggle.
+
+   Scoped to `.reveal-fallback` on purpose: that class only exists on the fallback
+   path. On the View Transitions path the live DOM is hidden behind a
+   snapshot, so an animation started here would be captured at 0% and the
+   icon would stay missing for the whole reveal. */
+@keyframes theme-icon-swap {
+  0% {
+    transform: rotate(-110deg) scale(0.3);
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+html.reveal-fallback .theme-toggle-icon {
+  animation: theme-icon-swap 360ms var(--reveal-ease) both;
+}
+/* Globe spin on the language button. React keeps the same <Globe> element
+   across a language change, so the callers key it on `lang` to force a
+   remount — otherwise this animation would only run on first paint. */
+@keyframes lang-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+html.reveal-fallback .lang-toggle-icon {
+  animation: lang-icon-spin 420ms var(--reveal-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 1ms !important;
+    animation-delay: 0s !important;
+  }
+  html.reveal-fallback,
+  html.reveal-fallback *,
+  html.reveal-fallback *::before,
+  html.reveal-fallback *::after {
+    transition-duration: 1ms !important;
+  }
+  html.reveal-fallback .theme-toggle-icon,
+  html.reveal-fallback .lang-toggle-icon {
+    animation: none !important;
+  }
 }

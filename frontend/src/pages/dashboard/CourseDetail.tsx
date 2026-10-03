@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Plus, FileText, ChevronLeft, Calendar, BookOpen } from "lucide-react";
+import { Plus, FileText, ChevronLeft, Calendar, BookOpen, ChevronRight } from "lucide-react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { api, CourseDto, AssignmentDto } from "@/lib/apiClient";
 import { useAuth } from "@/contexts/AuthContext";
-import { useAuth as useClerkAuth } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks";
 
@@ -70,7 +70,7 @@ export default function CourseDetail() {
       <div className="space-y-6 max-w-4xl">
         {/* Back */}
         <Link to="/dashboard/courses" className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
           {lang === "ar" ? "العودة للمقررات" : "Back to Courses"}
         </Link>
 
@@ -156,7 +156,7 @@ export default function CourseDetail() {
                 <Link to={`/dashboard/assignments/${a.id}`}>
                   <Button variant="outline" size="sm" className="w-full gap-1">
                     {lang === "ar" ? "عرض الواجب" : "View Assignment"}
-                    <ChevronLeft className="h-3.5 w-3.5" />
+                    <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />
                   </Button>
                 </Link>
               </div>

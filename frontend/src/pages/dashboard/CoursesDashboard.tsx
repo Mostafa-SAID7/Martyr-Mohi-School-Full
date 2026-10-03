@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, BookOpen, ChevronLeft, UserPlus, Check, Clock, Users } from "lucide-react";
+import { Plus, BookOpen, UserPlus, Check, Clock, Users, ChevronRight } from "lucide-react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { api, CourseDto } from "@/lib/apiClient";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
-import { useAuth as useClerkAuth } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { useToast } from "@/hooks";
 
 const COURSE_PALETTES = [
@@ -204,7 +204,7 @@ export default function CoursesDashboard() {
                       <Link to={`/dashboard/courses/${c.id}`} className="flex-1">
                         <Button variant="outline" size="sm" className="w-full gap-1 rounded-xl">
                           {lang === "ar" ? "التفاصيل" : "Details"}
-                          <ChevronLeft className="h-3.5 w-3.5" />
+                          <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />
                         </Button>
                       </Link>
                       {isStudent && !isEnrolled && (

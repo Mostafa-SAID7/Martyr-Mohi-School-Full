@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@clerk/react";
+import { useAuth } from "@clerk/clerk-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { api } from "@/lib/apiClient";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ROLE_OPTIONS } from "@/data";
 import logo from "@/assets/logo.png";
 import { cn } from "@/lib/utils";
@@ -88,7 +88,7 @@ export default function Onboarding() {
             ) : (
               <>
                 {lang === "ar" ? "متابعة" : "Continue"}
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 rtl:rotate-180" />
               </>
             )}
           </Button>

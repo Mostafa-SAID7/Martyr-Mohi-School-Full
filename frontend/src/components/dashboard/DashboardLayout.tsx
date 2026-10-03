@@ -127,7 +127,7 @@ export default function DashboardLayout({ children, title }: Props) {
               {(!collapsed || mobile) && (
                 <>
                   <span className="flex-1">{item.label}</span>
-                  {active && <ChevronLeft className="h-3.5 w-3.5 opacity-60" />}
+                  {active && <ChevronLeft className="h-3.5 w-3.5 opacity-60 rtl:rotate-180" />}
                 </>
               )}
             </Link>
@@ -142,7 +142,7 @@ export default function DashboardLayout({ children, title }: Props) {
       )}>
         {/* Lang toggle */}
         <button
-          onClick={toggle}
+          onClick={(e) => toggle({ x: e.clientX, y: e.clientY })}
           title={lang === "ar" ? "Switch to English" : "التبديل للعربية"}
           className={cn(
             "transition-colors text-muted-foreground hover:bg-accent/70 hover:text-foreground rounded-xl",
@@ -151,7 +151,7 @@ export default function DashboardLayout({ children, title }: Props) {
               : "w-full flex items-center gap-2.5 px-3 py-2 text-sm",
           )}
         >
-          <Globe className="h-4 w-4 flex-shrink-0" />
+          <Globe key={lang} className="h-4 w-4 flex-shrink-0 lang-toggle-icon" />
           {(!collapsed || mobile) && (
             <span>{lang === "ar" ? "English" : "العربية"}</span>
           )}
@@ -258,7 +258,7 @@ export default function DashboardLayout({ children, title }: Props) {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-4 md:p-6">
+        <main className="shell flex-1 py-6 md:py-8 w-full">
           {title && (
             <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-6 animate-fade-in">{title}</h1>
           )}

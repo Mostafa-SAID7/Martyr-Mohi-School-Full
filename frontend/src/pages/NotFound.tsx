@@ -29,7 +29,7 @@ const NotFound = () => {
             </Button>
           </Link>
           <Button variant="outline" onClick={() => navigate(-1)}>
-            <ArrowRight className="h-4 w-4 ml-2" />
+            <ArrowRight className="h-4 w-4 me-2 rtl:rotate-180" />
             الرجوع للخلف
           </Button>
         </div>

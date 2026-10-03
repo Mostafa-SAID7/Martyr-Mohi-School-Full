@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { useUser, useAuth as useClerkAuth } from "@clerk/react";
+import { useUser, useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { api } from "@/lib/apiClient";
 
 export type AppRole = "admin" | "teacher" | "student" | "parent";

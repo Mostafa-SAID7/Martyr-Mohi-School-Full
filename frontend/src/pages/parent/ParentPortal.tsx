@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useAuth as useClerkAuth } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { useLang } from "@/contexts/LanguageContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { api, ProfileDto } from "@/lib/apiClient";
 import { Link } from "react-router-dom";
-import { Users, Plus, ChevronLeft, BookOpen, GraduationCap, UserCheck } from "lucide-react";
+import { Users, Plus, BookOpen, GraduationCap, UserCheck, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -121,7 +121,7 @@ export default function ParentPortal() {
                       <GraduationCap className="h-4 w-4" />
                       {lang === "ar" ? "عرض التفاصيل" : "View Details"}
                     </span>
-                    <ChevronLeft className="h-4 w-4 group-hover:text-primary transition-colors" />
+                    <ChevronRight className="h-4 w-4 group-hover:text-primary transition-colors rtl:rotate-180" />
                   </div>
                 </Link>
               ))}

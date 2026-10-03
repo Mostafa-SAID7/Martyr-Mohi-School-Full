@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { api, AssignmentDto, CourseDto, SubmissionDto } from "@/lib/apiClient";
 import { useAuth } from "@/contexts/AuthContext";
-import { useAuth as useClerkAuth } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks";
 import { cn } from "@/lib/utils";
@@ -115,7 +115,7 @@ export default function AssignmentDetail() {
       <div className="space-y-6 max-w-3xl">
         {/* Back */}
         <Link to={course ? `/dashboard/courses/${course.id}` : "/dashboard/assignments"} className="text-sm text-muted-foreground hover:text-foreground inline-flex items-center gap-1">
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
           {lang === "ar" ? "رجوع" : "Back"}
         </Link>
 

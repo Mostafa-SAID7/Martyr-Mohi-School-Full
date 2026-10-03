@@ -1,9 +1,10 @@
-import { SignIn, SignUp } from "@clerk/react";
+import { SignIn, SignUp } from "@clerk/clerk-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Globe } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import { HERO_STATS } from "@/data";
+import { CLERK_APPEARANCE } from "@/config/clerkAppearance";
 import logo from "@/assets/logo.png";
 
 export default function Auth() {
@@ -62,36 +63,36 @@ export default function Auth() {
       </div>
 
       {/* Right panel — auth form */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 min-w-0 flex flex-col">
         {/* Top bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border lg:border-0">
+        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-4 border-b border-border lg:border-0">
           {/* Mobile logo */}
-          <Link to="/" className="flex items-center gap-2 lg:hidden">
-            <img src={logo} alt={t.schoolName} className="h-8 w-8 object-contain rounded-xl" />
-            <span className="text-sm font-bold text-foreground">{t.schoolName}</span>
+          <Link to="/" className="flex items-center gap-2 lg:hidden min-w-0">
+            <img src={logo} alt={t.schoolName} className="h-8 w-8 object-contain rounded-xl flex-shrink-0" />
+            <span className="text-sm font-bold text-foreground truncate">{t.schoolName}</span>
           </Link>
           <div className="hidden lg:block" />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <button
-              onClick={toggle}
+              onClick={(e) => toggle({ x: e.clientX, y: e.clientY })}
               className="w-8 h-8 flex items-center justify-center rounded-lg border border-border text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
               aria-label="تبديل اللغة"
             >
-              <Globe className="h-3.5 w-3.5" />
+              <Globe key={lang} className="h-3.5 w-3.5 lang-toggle-icon" />
             </button>
             <Link
               to="/"
               className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-accent"
             >
-              <ArrowRight className="h-3.5 w-3.5" />
+              <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
               {lang === "ar" ? "الرئيسية" : "Home"}
             </Link>
           </div>
         </div>
 
         {/* Form area */}
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full max-w-sm animate-scale-in">
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-6">
+          <div className="w-full max-w-sm min-w-0 animate-scale-in">
             {/* Heading */}
             <div className="mb-6 text-center">
               <h1 className="text-2xl font-bold text-foreground mb-1">
@@ -107,10 +108,10 @@ export default function Auth() {
             </div>
 
             {/* Mode tabs */}
-            <div className="flex gap-1 p-1 bg-secondary/60 rounded-xl mb-5 border border-border/60">
+            <div className="flex gap-1 p-1 bg-secondary/60 rounded-xl mb-5 border border-border/60 min-w-0">
               <button
                 onClick={() => setMode("sign-in")}
-                className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`flex-1 min-w-0 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   mode === "sign-in"
                     ? "bg-card text-foreground shadow-depth-sm border border-border/50"
                     : "text-muted-foreground hover:text-foreground"
@@ -120,7 +121,7 @@ export default function Auth() {
               </button>
               <button
                 onClick={() => setMode("sign-up")}
-                className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`flex-1 min-w-0 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   mode === "sign-up"
                     ? "bg-card text-foreground shadow-depth-sm border border-border/50"
                     : "text-muted-foreground hover:text-foreground"
@@ -131,47 +132,11 @@ export default function Auth() {
             </div>
 
             {/* Clerk */}
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center w-full min-w-0">
               {mode === "sign-in" ? (
-                <SignIn
-                  fallbackRedirectUrl="/onboarding"
-                  appearance={{
-                    elements: {
-                      rootBox: "w-full",
-                      card: "bg-card border border-border shadow-depth-md rounded-2xl",
-                      headerTitle: "text-foreground font-bold",
-                      headerSubtitle: "text-muted-foreground",
-                      formButtonPrimary: "bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-colors font-medium",
-                      formFieldInput: "border-input rounded-xl focus:ring-2 focus:ring-primary/20 bg-background",
-                      formFieldLabel: "text-foreground font-medium text-sm",
-                      footerActionLink: "text-primary hover:text-primary/80 font-medium",
-                      dividerLine: "bg-border",
-                      dividerText: "text-muted-foreground text-xs",
-                      socialButtonsBlockButton: "border border-border rounded-xl hover:bg-accent transition-colors",
-                      alertText: "text-destructive",
-                    },
-                  }}
-                />
+                <SignIn redirectUrl="/onboarding" appearance={CLERK_APPEARANCE} />
               ) : (
-                <SignUp
-                  fallbackRedirectUrl="/onboarding"
-                  appearance={{
-                    elements: {
-                      rootBox: "w-full",
-                      card: "bg-card border border-border shadow-depth-md rounded-2xl",
-                      headerTitle: "text-foreground font-bold",
-                      headerSubtitle: "text-muted-foreground",
-                      formButtonPrimary: "bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-colors font-medium",
-                      formFieldInput: "border-input rounded-xl focus:ring-2 focus:ring-primary/20 bg-background",
-                      formFieldLabel: "text-foreground font-medium text-sm",
-                      footerActionLink: "text-primary hover:text-primary/80 font-medium",
-                      dividerLine: "bg-border",
-                      dividerText: "text-muted-foreground text-xs",
-                      socialButtonsBlockButton: "border border-border rounded-xl hover:bg-accent transition-colors",
-                      alertText: "text-destructive",
-                    },
-                  }}
-                />
+                <SignUp redirectUrl="/onboarding" appearance={CLERK_APPEARANCE} />
               )}
             </div>
           </div>

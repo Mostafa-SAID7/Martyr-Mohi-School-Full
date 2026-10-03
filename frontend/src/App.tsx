@@ -1,4 +1,4 @@
-import { ClerkProvider } from "@clerk/react";
+import { ClerkProvider } from "@clerk/clerk-react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Suspense, lazy } from "react";
 
 import Index from "./pages/Index";
@@ -50,56 +51,61 @@ const Spinner = () => (
 
 export default function App() {
   return (
-    <ClerkProvider publishableKey={CLERK_KEY} afterSignOutUrl="/">
-      <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <AuthProvider>
-                <Suspense fallback={<Spinner />}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/courses" element={<Courses />} />
-                    <Route path="/teachers" element={<Teachers />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/help" element={<Help />} />
-                    <Route path="/privacy" element={<Privacy />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/onboarding" element={<Onboarding />} />
-                    <Route path="/messages" element={<Messages />} />
+    <ThemeProvider>
+      <ClerkProvider publishableKey={CLERK_KEY}>
+        <QueryClientProvider client={queryClient}>
+          <LanguageProvider>
+            {/* 300ms: long enough that sweeping the cursor across the header
+                doesn't fire a string of them, short enough that a deliberate
+                hover still feels answered. Radix defaults to 700ms. */}
+            <TooltipProvider delayDuration={300}>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <AuthProvider>
+                  <Suspense fallback={<Spinner />}>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/courses" element={<Courses />} />
+                      <Route path="/teachers" element={<Teachers />} />
+                      <Route path="/about" element={<About />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/faq" element={<FAQ />} />
+                      <Route path="/help" element={<Help />} />
+                      <Route path="/privacy" element={<Privacy />} />
+                      <Route path="/auth" element={<Auth />} />
+                      <Route path="/onboarding" element={<Onboarding />} />
+                      <Route path="/messages" element={<Messages />} />
 
-                    {/* Student / shared dashboard */}
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/dashboard/courses" element={<CoursesDashboard />} />
-                    <Route path="/dashboard/courses/:id" element={<CourseDetail />} />
-                    <Route path="/dashboard/assignments" element={<AssignmentsList />} />
-                    <Route path="/dashboard/assignments/:id" element={<AssignmentDetail />} />
-                    <Route path="/dashboard/grades" element={<Grades />} />
-                    <Route path="/dashboard/schedule" element={<SchedulePage />} />
+                      {/* Student / shared dashboard */}
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/dashboard/courses" element={<CoursesDashboard />} />
+                      <Route path="/dashboard/courses/:id" element={<CourseDetail />} />
+                      <Route path="/dashboard/assignments" element={<AssignmentsList />} />
+                      <Route path="/dashboard/assignments/:id" element={<AssignmentDetail />} />
+                      <Route path="/dashboard/grades" element={<Grades />} />
+                      <Route path="/dashboard/schedule" element={<SchedulePage />} />
 
-                    {/* Teacher panel */}
-                    <Route path="/teacher/courses" element={<TeacherCourses />} />
-                    <Route path="/teacher/courses/:id/lessons" element={<TeacherLessons />} />
-                    <Route path="/teacher/courses/:id/assignments" element={<TeacherAssignments />} />
-                    <Route path="/teacher/grades" element={<TeacherGrades />} />
+                      {/* Teacher panel */}
+                      <Route path="/teacher/courses" element={<TeacherCourses />} />
+                      <Route path="/teacher/courses/:id/lessons" element={<TeacherLessons />} />
+                      <Route path="/teacher/courses/:id/assignments" element={<TeacherAssignments />} />
+                      <Route path="/teacher/grades" element={<TeacherGrades />} />
 
-                    {/* Parent portal */}
-                    <Route path="/parent" element={<ParentPortal />} />
-                    <Route path="/parent/students/:studentId" element={<ParentStudentDetail />} />
+                      {/* Parent portal */}
+                      <Route path="/parent" element={<ParentPortal />} />
+                      <Route path="/parent/students/:studentId" element={<ParentStudentDetail />} />
 
-                    <Route path="/admin-setup" element={<AdminSetup />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
-              </AuthProvider>
-            </BrowserRouter>
-          </TooltipProvider>
-        </LanguageProvider>
-      </QueryClientProvider>
-    </ClerkProvider>
+                      <Route path="/admin-setup" element={<AdminSetup />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Suspense>
+                </AuthProvider>
+              </BrowserRouter>
+            </TooltipProvider>
+          </LanguageProvider>
+        </QueryClientProvider>
+      </ClerkProvider>
+    </ThemeProvider>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FileText, ChevronLeft, Calendar, Clock } from "lucide-react";
+import { FileText, Calendar, Clock, ChevronRight } from "lucide-react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { api, AssignmentDto } from "@/lib/apiClient";
@@ -81,7 +81,7 @@ export default function AssignmentsList() {
             <Link to={`/dashboard/assignments/${a.id}`} className="flex-shrink-0">
               <Button variant="outline" size="sm" className="gap-1 whitespace-nowrap">
                 {lang === "ar" ? "فتح" : "Open"}
-                <ChevronLeft className="h-3.5 w-3.5" />
+                <ChevronRight className="h-3.5 w-3.5 rtl:rotate-180" />
               </Button>
             </Link>
           </div>

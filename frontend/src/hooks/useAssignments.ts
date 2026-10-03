@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { assignmentsApi, submissionsApi } from "@/services/api";
-import { useAuth } from "@clerk/react";
+import { useAuth } from "@clerk/clerk-react";
 
 /**
  * Get assignments for a course

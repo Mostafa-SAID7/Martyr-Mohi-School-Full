@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Shield, CheckCircle, AlertCircle, Lock } from "lucide-react";
-import { useAuth as useClerkAuth } from "@clerk/react";
-import { SignIn } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
+import { SignIn } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
+import { CLERK_APPEARANCE } from "@/config/clerkAppearance";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/api";
 
@@ -52,7 +53,7 @@ export default function AdminSetup() {
   if (!isSignedIn) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md min-w-0">
           <div className="text-center mb-6">
             <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
               <Shield className="h-7 w-7 text-primary" />
@@ -64,7 +65,7 @@ export default function AdminSetup() {
               {lang === "ar" ? "سجّل الدخول أولاً لترقية حسابك إلى مدير" : "Sign in first to upgrade to admin"}
             </p>
           </div>
-          <SignIn fallbackRedirectUrl="/admin-setup" />
+          <SignIn redirectUrl="/admin-setup" appearance={CLERK_APPEARANCE} />
         </div>
       </div>
     );
@@ -72,7 +73,7 @@ export default function AdminSetup() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md min-w-0">
         {/* Card */}
         <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
           {/* Header */}

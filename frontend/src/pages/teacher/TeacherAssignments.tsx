@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useAuth as useClerkAuth } from "@clerk/react";
+import { useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { useLang } from "@/contexts/LanguageContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { api, AssignmentDto, SubmissionDto } from "@/lib/apiClient";
@@ -80,7 +80,7 @@ export default function TeacherAssignments() {
       <div className="space-y-6">
         <div className="flex items-center gap-3">
           <Link to="/teacher/courses">
-            <Button variant="ghost" size="sm" className="gap-1"><ChevronLeft className="h-4 w-4" />{lang === "ar" ? "العودة" : "Back"}</Button>
+            <Button variant="ghost" size="sm" className="gap-1"><ChevronLeft className="h-4 w-4 rtl:rotate-180" />{lang === "ar" ? "العودة" : "Back"}</Button>
           </Link>
           <Button onClick={() => setShowForm(!showForm)} className="gap-2 mr-auto">
             <Plus className="h-4 w-4" />{lang === "ar" ? "واجب جديد" : "New Assignment"}

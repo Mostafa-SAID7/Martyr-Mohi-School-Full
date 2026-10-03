@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { enrollmentsApi } from "@/services/api";
-import { useAuth } from "@clerk/react";
+import { useAuth } from "@clerk/clerk-react";
 
 /**
  * Get list of course IDs that current user is enrolled in

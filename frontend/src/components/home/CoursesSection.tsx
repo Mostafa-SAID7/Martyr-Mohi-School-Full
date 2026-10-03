@@ -1,4 +1,4 @@
-import { ArrowLeft, Users, Clock, Star, BookOpen } from "lucide-react";
+﻿import { Users, Clock, Star, BookOpen, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLang } from "@/contexts/LanguageContext";
 import { COURSES } from "@/data";
@@ -7,7 +7,7 @@ export function CoursesSection() {
   const { lang } = useLang();
   return (
     <section className="py-20 bg-background">
-      <div className="container">
+      <div className="shell">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-12">
           <div>
@@ -27,7 +27,7 @@ export function CoursesSection() {
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors flex-shrink-0 shadow-sm"
           >
             {lang === "ar" ? "عرض الكل" : "View All"}
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4 rtl:rotate-180" />
           </Link>
         </div>
 

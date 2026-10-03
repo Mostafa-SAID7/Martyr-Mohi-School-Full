@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { coursesApi } from "@/services/api";
-import { useAuth } from "@clerk/react";
+import { useAuth } from "@clerk/clerk-react";
 
 /**
  * Get all courses or filter by teacher

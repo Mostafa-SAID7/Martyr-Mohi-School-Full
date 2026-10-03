@@ -25,6 +25,7 @@ model Profile {
 
   // Course Relations
   coursesCreated    Course[]
+  enrollments       Enrollment[] @relation("enrollments")
 
   // Lesson Relations
   lessonsCreated    Lesson[]

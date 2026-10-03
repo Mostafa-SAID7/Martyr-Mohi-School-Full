@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { ArrowLeft, Play, Sparkles, GraduationCap, Users, Award } from "lucide-react";
+﻿import { Link } from "react-router-dom";
+import { Play, Sparkles, GraduationCap, Users, Award, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/contexts/LanguageContext";
 import { HERO_STATS } from "@/data";
@@ -8,15 +8,15 @@ import heroImg from "@/assets/hero-school.jpg";
 export function HeroSection() {
   const { t, lang } = useLang();
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden">
-      {/* Dot-grid background */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+    <section className="relative py-16 md:py-24">
+      {/* Dot-grid background — clipped here so the hero glow/cards are free to bleed */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
         <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--primary)) 1.5px, transparent 1.5px)", backgroundSize: "28px 28px" }} />
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/6 rounded-full blur-3xl -translate-x-1/3 -translate-y-1/3" />
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl translate-x-1/4 translate-y-1/4" />
       </div>
 
-      <div className="container relative">
+      <div className="shell relative">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* ── Content ── */}
           <div className="text-center lg:text-right order-2 lg:order-1">
@@ -38,7 +38,7 @@ export function HeroSection() {
               <Link to="/auth">
                 <Button size="lg" className="gap-2 w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300 px-8">
                   {t.startLearning}
-                  <ArrowLeft className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                 </Button>
               </Link>
               <Link to="/courses">
@@ -66,7 +66,7 @@ export function HeroSection() {
 
           {/* ── Image ── */}
           <div className="relative order-1 lg:order-2 animate-fade-in" style={{ animationDelay: "150ms" }}>
-            <div className="absolute -inset-4 bg-gradient-to-br from-primary/15 to-primary/5 rounded-3xl blur-2xl" aria-hidden />
+            <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-br from-primary/15 to-primary/5 rounded-3xl blur-2xl" aria-hidden />
             <div className="relative">
               <img
                 src={heroImg}
@@ -78,7 +78,7 @@ export function HeroSection() {
               />
 
               {/* Floating card — bottom right */}
-              <div className="absolute -bottom-4 -right-4 bg-card border border-border rounded-xl p-3 shadow-xl hidden sm:flex items-center gap-2.5 animate-float">
+              <div className="absolute bottom-3 right-3 xl:-bottom-4 xl:-right-4 bg-card border border-border rounded-xl p-3 shadow-xl hidden sm:flex items-center gap-2.5 animate-float">
                 <div className="w-9 h-9 rounded-lg bg-green-100 border border-green-200 flex items-center justify-center">
                   <Users className="h-4 w-4 text-green-600" />
                 </div>
@@ -89,7 +89,7 @@ export function HeroSection() {
               </div>
 
               {/* Floating card — top left */}
-              <div className="absolute -top-4 -left-4 bg-card border border-border rounded-xl p-3 shadow-xl hidden sm:flex items-center gap-2.5 animate-float" style={{ animationDelay: "1s" }}>
+              <div className="absolute top-3 left-3 xl:-top-4 xl:-left-4 bg-card border border-border rounded-xl p-3 shadow-xl hidden sm:flex items-center gap-2.5 animate-float" style={{ animationDelay: "1s" }}>
                 <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
                   <Award className="h-4 w-4 text-primary" />
                 </div>
