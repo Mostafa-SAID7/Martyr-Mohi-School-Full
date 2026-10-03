@@ -10,7 +10,7 @@ import { api, CourseDto } from "@/lib/apiClient";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
 import { useAuth as useClerkAuth } from "@clerk/react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 
 const COURSE_PALETTES = [
   { from: "from-blue-500", to: "to-blue-700", light: "bg-blue-50", border: "border-blue-200", text: "text-blue-600", icon: "🔢" },

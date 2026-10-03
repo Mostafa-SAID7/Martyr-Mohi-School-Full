@@ -10,7 +10,7 @@ import { api, CourseDto, AssignmentDto } from "@/lib/apiClient";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAuth as useClerkAuth } from "@clerk/react";
 import { useLang } from "@/contexts/LanguageContext";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>();

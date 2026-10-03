@@ -10,7 +10,7 @@ import { api, AssignmentDto, CourseDto, SubmissionDto } from "@/lib/apiClient";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAuth as useClerkAuth } from "@clerk/react";
 import { useLang } from "@/contexts/LanguageContext";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 import { cn } from "@/lib/utils";
 
 interface SubmissionRow extends SubmissionDto { studentName?: string | null; }
