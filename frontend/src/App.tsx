@@ -8,6 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Suspense, lazy } from "react";
+import ConfigError from "@/components/ConfigError";
 
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -41,7 +42,14 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30_000 } },
 });
 
-const CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string;
+const CLERK_KEY = (import.meta.env.VITE_CLERK_PUBLISHABLE_KEY ?? "") as string;
+
+// Checked before <ClerkProvider>: it throws a minified error and leaves a
+// blank page, which tells nobody looking at the deploy what to fix. Vite
+// inlines VITE_* variables at build time, so an unset value here means the
+// variable was missing when the bundle was built — not merely now.
+const MISSING_CONFIG: string[] = [];
+if (!CLERK_KEY.trim()) MISSING_CONFIG.push("VITE_CLERK_PUBLISHABLE_KEY");
 
 const Spinner = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -50,6 +58,10 @@ const Spinner = () => (
 );
 
 export default function App() {
+  if (MISSING_CONFIG.length > 0) {
+    return <ConfigError missing={MISSING_CONFIG} />;
+  }
+
   return (
     <ThemeProvider>
       <ClerkProvider publishableKey={CLERK_KEY}>
