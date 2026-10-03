@@ -5,11 +5,11 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Naseem School Hub API",
+      title: "Martyr Mohi El-Din Shaheen School API",
       version: "1.0.0",
       description: "Learning Management System API",
       contact: {
-        name: "Naseem School Hub",
+        name: "Martyr Mohi El-Din Shaheen School",
       },
     },
     servers: [

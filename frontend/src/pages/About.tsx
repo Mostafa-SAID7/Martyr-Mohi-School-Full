@@ -17,7 +17,7 @@ const About = () => {
           <div className="relative max-w-5xl mx-auto mb-12 rounded-2xl overflow-hidden border border-border shadow-card-hover">
             <img
               src={schoolImg}
-              alt="مبنى مدرسة نصر الدين"
+              alt={lang === "ar" ? "مدرسة الشهيد محي الدين نوح شاهين" : "Martyr Mohi El-Din Shaheen School"}
               width={1280}
               height={896}
               loading="lazy"
@@ -28,12 +28,12 @@ const About = () => {
           {/* Page Header */}
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              {lang === "ar" ? "عن مدرسة نصر الدين" : "About Nasr El-Din School"}
+              {lang === "ar" ? "عن مدرسة الشهيد محي الدين نوح شاهين" : "About Martyr Mohi El-Din Shaheen School"}
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
               {lang === "ar"
-                ? "مدرسة نصر الدين هي مؤسسة تعليمية رائدة تأسست بهدف توفير تعليم متميز يجمع بين الأصالة والمعاصرة. نحن ملتزمون بتطوير جيل قادر على مواجهة تحديات المستقبل."
-                : "Nasr El-Din School is a leading educational institution founded to provide distinguished education that combines tradition and modernity. We are committed to developing a generation capable of facing future challenges."}
+                ? "مدرسة الشهيد محي الدين نوح شاهين للتعليم الأساسي تقع في ميت الرخا بمركز زفتى بمحافظة الغربية، وتقدم خدمات تعليمية للمجتمع المحلي."
+                : "Martyr Mohi El-Din Shaheen Basic Education School is located in Mit Al-Rakha, Zefta, Gharbia Governorate, providing educational services to the local community."}
             </p>
           </div>
 

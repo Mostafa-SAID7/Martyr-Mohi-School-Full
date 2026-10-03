@@ -35,8 +35,8 @@ const corsOptions = {
       "http://127.0.0.1:5173",
       "http://127.0.0.1:3000",
       // Add production frontend URLs here
-      // "https://naseem-hub.com",
-      // "https://app.naseem-hub.com",
+      // "https://martyr-mohi-school.com",
+      // "https://app.martyr-mohi-school.com",
     ];
 
     if (!origin || allowedOrigins.includes(origin)) {

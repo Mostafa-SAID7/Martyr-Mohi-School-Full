@@ -37,4 +37,4 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
 ## Reporting Issues
 
-Use templates for [bugs](https://github.com/Mostafa-SAID7/naseem-school-hub/issues/new?template=bug_report.md) and [features](https://github.com/Mostafa-SAID7/naseem-school-hub/issues/new?template=feature_request.md).
+Use templates for [bugs](https://github.com/Mostafa-SAID7/Martyr-Mohi-School-Full/issues/new?template=bug_report.md) and [features](https://github.com/Mostafa-SAID7/Martyr-Mohi-School-Full/issues/new?template=feature_request.md).

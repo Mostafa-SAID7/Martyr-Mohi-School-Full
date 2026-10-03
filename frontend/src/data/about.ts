@@ -1,6 +1,9 @@
 /**
  * About Page Data
  * Mission, Vision, Values, and Achievements
+ * 
+ * NOTE: Only verified information is included.
+ * Unsupported claims have been removed.
  */
 
 import { Target, Eye, Heart } from "lucide-react";
@@ -10,30 +13,41 @@ export const ABOUT_VALUES = [
     icon: Target,
     titleAr: "رسالتنا",
     titleEn: "Our Mission",
-    descriptionAr: "تقديم تعليم عالي الجودة يمكّن الطلاب من تحقيق إمكاناتهم الكاملة في بيئة تعليمية محفزة ومبتكرة.",
-    descriptionEn: "Providing high-quality education that empowers students to achieve their full potential in a stimulating and innovative learning environment.",
+    descriptionAr: "تقديم تعليم أساسي عالي الجودة يخدم مجتمع ميت الرخا والمنطقة.",
+    descriptionEn: "To provide quality basic education serving the community of Mit Al-Rakha and the region.",
   },
   {
     icon: Eye,
     titleAr: "رؤيتنا",
     titleEn: "Our Vision",
-    descriptionAr: "أن نكون المؤسسة التعليمية الرائدة في المنطقة، ونموذجًا للتميز الأكاديمي والتربوي.",
-    descriptionEn: "To be the leading educational institution in the region, and a model for academic and educational excellence.",
+    descriptionAr: "أن نكون مؤسسة تعليمية أساسية رائدة في المنطقة.",
+    descriptionEn: "To be a leading basic education institution in the region.",
   },
   {
     icon: Heart,
     titleAr: "قيمنا",
     titleEn: "Our Values",
-    descriptionAr: "النزاهة، التميز، الابتكار، الاحترام المتبادل، والالتزام بالتطوير المستمر.",
-    descriptionEn: "Integrity, excellence, innovation, mutual respect, and commitment to continuous improvement.",
+    descriptionAr: "النزاهة، الجودة التعليمية، المشاركة المجتمعية، والتطوير المستمر.",
+    descriptionEn: "Integrity, quality education, community engagement, and continuous improvement.",
   },
 ];
 
+/**
+ * Achievements
+ * Only verified historical information is included.
+ * Unsupported claims (20+ years, 98% success rate, international partnerships, etc.) have been removed.
+ */
 export const ACHIEVEMENTS = [
-  { textAr: "أكثر من 20 عامًا من الخبرة في مجال التعليم", textEn: "More than 20 years of experience in education" },
-  { textAr: "نسبة نجاح تتجاوز 98% في الامتحانات الوطنية", textEn: "Success rate exceeding 98% in national exams" },
-  { textAr: "شراكات مع مؤسسات تعليمية دولية", textEn: "Partnerships with international educational institutions" },
-  { textAr: "برامج تطوير مهني مستمرة للمعلمين", textEn: "Continuous professional development programs for teachers" },
-  { textAr: "بنية تحتية تقنية متطورة", textEn: "Advanced technical infrastructure" },
-  { textAr: "أنشطة لا صفية متنوعة", textEn: "Diverse extracurricular activities" },
+  {
+    textAr: "مدرسة تعليم أساسي موجودة في ميت الرخا",
+    textEn: "Established basic education school in Mit Al-Rakha",
+  },
+  {
+    textAr: "خدمة المجتمع المحلي لسنوات",
+    textEn: "Serving the local community",
+  },
+  {
+    textAr: "مركز تعليمي معروف في المنطقة",
+    textEn: "Recognized educational center in the region",
+  },
 ];

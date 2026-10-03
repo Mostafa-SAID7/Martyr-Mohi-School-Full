@@ -36,8 +36,8 @@ export function Footer() {
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               {lang === "ar"
-                ? "منصة تعليمية متكاملة تهدف إلى توفير تجربة تعلم حديثة ومتطورة للطلاب والمعلمين وأولياء الأمور."
-                : "A comprehensive educational platform providing a modern learning experience for students, teachers, and parents."}
+                ? "منصة رقمية للتعريف بمدرسة الشهيد محي الدين نوح شاهين للتعليم الأساسي وخدماتها التعليمية."
+                : "A digital platform for Martyr Mohi El-Din Shaheen Basic Education School and its educational services."}
             </p>
           </div>
 
@@ -73,17 +73,15 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-foreground mb-4 text-sm">{lang === "ar" ? "تواصل معنا" : "Contact Us"}</h4>
             <ul className="space-y-3">
-              <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <span>info@nasreldin.edu</span>
-              </li>
-              <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                <span dir="ltr">+20 123 456 7890</span>
+              <li className="text-sm text-muted-foreground">
+                {lang === "ar" ? "غير منشور رسميًا" : "Not publicly published"}
               </li>
               <li className="flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                <span>{lang === "ar" ? "القاهرة، مصر" : "Cairo, Egypt"}</span>
+                <span>{lang === "ar" ? "ميت الرخا، مركز زفتى، محافظة الغربية، مصر" : "Mit Al-Rakha, Zefta, Gharbia, Egypt"}</span>
+              </li>
+              <li className="text-xs text-muted-foreground">
+                {lang === "ar" ? "Plus Code: J6CG+9F2" : "Plus Code: J6CG+9F2"}
               </li>
             </ul>
           </div>

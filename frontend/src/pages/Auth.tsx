@@ -57,7 +57,7 @@ export default function Auth() {
 
         {/* Bottom */}
         <div className="relative z-10 text-white/50 text-xs">
-          {lang === "ar" ? "© 2025 مدرسة نصر الدين" : "© 2025 Nasr Al-Din School"}
+          {lang === "ar" ? "© 2025 مدرسة الشهيد محي الدين نوح شاهين" : "© 2025 Martyr Mohi El-Din Shaheen School"}
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 {
-  "name": "naseem-school-hub-frontend",
+  "name": "martyr-mohi-school-frontend",
   "version": "0.0.1",
-  "description": "Naseem School Hub - Learning Management System",
+  "description": "Martyr Mohi El-Din Shaheen School - Learning Management System",
   "private": true,
   "type": "module",
   "scripts": {

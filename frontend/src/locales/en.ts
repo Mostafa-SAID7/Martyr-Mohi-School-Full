@@ -5,7 +5,7 @@
 
 export const en = {
   // Navigation & Basic
-  schoolName: "Nasr El-Din School",
+  schoolName: "Martyr Mohi El-Din Shaheen School",
   home: "Home",
   courses: "Courses",
   teachers: "Teachers",
@@ -45,14 +45,14 @@ export const en = {
 
   // Hero Section
   heroTitle: "Welcome to",
-  heroSubtitle: "Nasr El-Din School",
-  heroDesc: "An integrated educational platform connecting students and teachers in a modern learning environment.",
+  heroSubtitle: "Martyr Mohi El-Din Shaheen School",
+  heroDesc: "A digital platform introducing the school, its educational services, and community in Mit Al-Rakha, Zefta, Gharbia.",
   startLearning: "Start Learning Now",
   learnMore: "Learn More",
 
   // Features Section
-  features: "Why Nasr El-Din School?",
-  featuresDesc: "We offer a distinctive educational experience combining quality and ease",
+  features: "About Martyr Mohi El-Din Shaheen School",
+  featuresDesc: "A basic education school serving the community of Mit Al-Rakha",
 
   // Stats
   students: "Enrolled Students",
@@ -90,11 +90,11 @@ export const en = {
 
   // About Page
   missionTitle: "Our Mission",
-  missionDesc: "Providing high-quality education that empowers students to achieve their full potential in a stimulating and innovative learning environment.",
+  missionDesc: "To provide quality basic education serving the community of Mit Al-Rakha and the region.",
   visionTitle: "Our Vision",
-  visionDesc: "To be the leading educational institution in the region, and a model for academic and educational excellence.",
+  visionDesc: "To be a leading basic education institution in the region.",
   valuesTitle: "Our Values",
-  valuesDesc: "Integrity, excellence, innovation, mutual respect, and commitment to continuous improvement.",
+  valuesDesc: "Integrity, quality education, community engagement, and continuous improvement.",
 
   // Contact Page
   phoneLabel: "Phone",

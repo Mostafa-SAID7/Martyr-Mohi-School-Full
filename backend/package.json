@@ -1,7 +1,7 @@
 {
-  "name": "naseem-school-hub-backend",
+  "name": "martyr-mohi-school-backend",
   "version": "1.0.0",
-  "description": "Backend API for Naseem School Hub",
+  "description": "Backend API for Martyr Mohi El-Din Shaheen School",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {

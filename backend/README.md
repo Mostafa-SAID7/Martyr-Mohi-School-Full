@@ -1,6 +1,8 @@
-# Naseem School Hub - Backend API
+# Martyr Mohi El-Din Shaheen School - Backend API
 
-A production-ready Node.js + TypeScript backend for the Naseem School Hub learning management system.
+A production-ready Node.js + TypeScript backend for the Martyr Mohi El-Din Shaheen School learning management system.
+
+**School:** Martyr Mohi El-Din Shaheen Basic Education School, Mit Al-Rakha, Zefta, Gharbia, Egypt
 
 ## Architecture Overview
 

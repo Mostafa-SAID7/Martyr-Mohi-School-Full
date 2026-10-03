@@ -38,10 +38,13 @@ export const SCHEDULE_TYPE_COLORS: Record<ScheduleType, string> = {
 } as const;
 
 // Statistics
+// NOTE: These are placeholder values. Actual school statistics are not published.
+// Do not represent these as real school data.
 export const STATS = {
-  courses: "+50",
-  students: "+500",
-  teachers: "+100",
+  courses: null,
+  students: null,
+  teachers: null,
+  statsStatus: "not_published",
 } as const;
 
 // Numeric Thresholds
@@ -55,6 +58,8 @@ export const NUMERIC_CONSTANTS = {
 
 // External Links
 export const EXTERNAL_LINKS = {
-  supportEmail: "support@nasreldin-school.com",
-  supportPhone: "+20 123 456 7890",
+  supportEmail: null,
+  supportEmailStatus: "not_published",
+  supportPhone: null,
+  supportPhoneStatus: "not_published",
 } as const;

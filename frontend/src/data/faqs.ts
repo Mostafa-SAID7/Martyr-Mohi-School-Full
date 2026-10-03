@@ -1,55 +1,56 @@
 /**
  * FAQ Data
  * Frequently Asked Questions
+ * Updated to reflect actual school information and verified facts
  */
 
 export const FAQS = [
   {
-    questionAr: "كيف يمكنني التسجيل في مدرسة نصر الدين؟",
-    questionEn: "How can I register in Nasr El-Din School?",
-    answerAr: "يمكنك التسجيل بسهولة من خلال الضغط على زر 'إنشاء حساب' في الصفحة الرئيسية، ثم إدخال بياناتك الشخصية والبريد الإلكتروني وكلمة المرور. بعد التسجيل، يمكنك الوصول إلى جميع المقررات المتاحة.",
-    answerEn: "You can easily register by clicking the 'Create Account' button on the homepage and entering your personal information, email, and password. After registration, you'll have access to all available courses.",
+    questionAr: "أين تقع مدرسة الشهيد محي الدين نوح شاهين؟",
+    questionEn: "Where is Martyr Mohi El-Din Shaheen School located?",
+    answerAr: "تقع المدرسة في ميت الرخا، مركز زفتى، محافظة الغربية، مصر. يمكنك استخدام Plus Code: J6CG+9F2 للعثور على الموقع على الخريطة.",
+    answerEn: "The school is located in Mit Al-Rakha, Zefta, Gharbia Governorate, Egypt. You can use Plus Code: J6CG+9F2 to find it on the map.",
   },
   {
-    questionAr: "هل المقررات مجانية؟",
-    questionEn: "Are the courses free?",
-    answerAr: "نعم، جميع المقررات الأساسية متاحة مجاناً للطلاب المسجلين. قد تتوفر بعض المقررات المتقدمة مقابل رسوم رمزية.",
-    answerEn: "Yes, all basic courses are available free for registered students. Some advanced courses may have a nominal fee.",
+    questionAr: "ما اسم المدرسة الرسمي؟",
+    questionEn: "What is the official name of the school?",
+    answerAr: "اسم المدرسة الرسمي هو: مدرسة الشهيد محي الدين نوح شاهين للتعليم الأساسي (Martyr Mohi El-Din Nouh Shaheen Basic Education School)",
+    answerEn: "The official name is: مدرسة الشهيد محي الدين نوح شاهين للتعليم الأساسي (Martyr Mohi El-Din Nouh Shaheen Basic Education School)",
   },
   {
-    questionAr: "كيف يمكنني التواصل مع المعلمين؟",
-    questionEn: "How can I contact teachers?",
-    answerAr: "يمكنك التواصل مع المعلمين من خلال نظام الرسائل الداخلي في لوحة التحكم الخاصة بك، أو من خلال قسم التعليقات في كل درس.",
-    answerEn: "You can contact teachers through the internal messaging system in your dashboard or through the comments section in each lesson.",
+    questionAr: "ما نوع التعليم في المدرسة؟",
+    questionEn: "What type of education does the school provide?",
+    answerAr: "المدرسة متخصصة في التعليم الأساسي (Basic Education).",
+    answerEn: "The school specializes in Basic Education.",
   },
   {
-    questionAr: "هل يمكنني الوصول للمحتوى من الهاتف المحمول؟",
-    questionEn: "Can I access the content from mobile?",
-    answerAr: "نعم، منصتنا متوافقة تماماً مع جميع الأجهزة بما فيها الهواتف المحمولة والأجهزة اللوحية. يمكنك التعلم في أي وقت ومن أي مكان.",
-    answerEn: "Yes, our platform is fully compatible with all devices including mobile phones and tablets. You can learn anytime from anywhere.",
+    questionAr: "هل رقم الهاتف منشور رسميًا؟",
+    questionEn: "Is a phone number publicly published?",
+    answerAr: "رقم الهاتف غير منشور رسميًا حاليًا. يرجى البحث في المراجع الرسمية للمحافظة أو المركز.",
+    answerEn: "The phone number is not publicly published at this time. Please check official governorate or center references.",
   },
   {
-    questionAr: "كيف أحصل على شهادة إتمام المقرر؟",
-    questionEn: "How do I get a course completion certificate?",
-    answerAr: "بعد إكمال جميع الدروس والاختبارات بنجاح، ستحصل تلقائياً على شهادة إتمام يمكنك تحميلها وطباعتها.",
-    answerEn: "After completing all lessons and passing all tests successfully, you'll automatically receive a completion certificate that you can download and print.",
+    questionAr: "هل البريد الإلكتروني منشور رسميًا؟",
+    questionEn: "Is an email address publicly published?",
+    answerAr: "البريد الإلكتروني غير منشور رسميًا حاليًا.",
+    answerEn: "The email address is not publicly published at this time.",
   },
   {
-    questionAr: "ماذا أفعل إذا نسيت كلمة المرور؟",
-    questionEn: "What should I do if I forgot my password?",
-    answerAr: "يمكنك استخدام خيار 'نسيت كلمة المرور' في صفحة تسجيل الدخول، وسيتم إرسال رابط لإعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
-    answerEn: "You can use the 'Forgot Password' option on the login page, and a password reset link will be sent to your email.",
+    questionAr: "هل بيانات هيئة التدريس متاحة؟",
+    questionEn: "Is faculty information available?",
+    answerAr: "بيانات هيئة التدريس غير منشورة رسميًا حاليًا. سيتم نشر المعلومات عند توفر مصدر رسمي.",
+    answerEn: "Faculty information is not officially published at this time. It will be published when official sources are available.",
   },
   {
-    questionAr: "هل يوجد دعم فني متاح؟",
-    questionEn: "Is technical support available?",
-    answerAr: "نعم، فريق الدعم الفني متاح من الأحد إلى الخميس من الساعة 8 صباحاً حتى 4 مساءً. يمكنك التواصل معنا عبر صفحة 'تواصل معنا' أو البريد الإلكتروني.",
-    answerEn: "Yes, our technical support team is available Sunday to Thursday from 8 AM to 4 PM. You can contact us through the 'Contact Us' page or email.",
+    questionAr: "أين يمكن العثور على آخر أخبار المدرسة؟",
+    questionEn: "Where can I find the latest school news?",
+    answerAr: "نحن نعمل على نشر آخر الأخبار والمعلومات. يرجى متابعة المراجع الرسمية للمحافظة.",
+    answerEn: "We are working on publishing the latest news and information. Please follow official governorate references.",
   },
   {
-    questionAr: "هل يمكن لأولياء الأمور متابعة تقدم أبنائهم؟",
-    questionEn: "Can parents track their children's progress?",
-    answerAr: "نعم، نوفر بوابة خاصة لأولياء الأمور تمكنهم من متابعة تقدم أبنائهم والتواصل مع المعلمين والاطلاع على الدرجات والحضور.",
-    answerEn: "Yes, we provide a special parent portal that allows them to track their children's progress, communicate with teachers, and view grades and attendance.",
+    questionAr: "هل توجد بيانات رسمية عن المباني أو التوسعات؟",
+    questionEn: "Is there official data about school buildings or expansions?",
+    answerAr: "تم ذكر المدرسة في تقرير 2021 حول ميت الرخا، والذي أشار إلى توسعات مخطط لها. للمزيد من التفاصيل، يرجى مراجعة المصادر الرسمية.",
+    answerEn: "The school was mentioned in a 2021 report about Mit Al-Rakha, which referenced planned expansions. For more details, please consult official sources.",
   },
 ] as const;

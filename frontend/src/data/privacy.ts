@@ -1,5 +1,6 @@
 /**
  * Privacy Policy Data
+ * Updated for Martyr Mohi El-Din Shaheen School
  */
 
 export const PRIVACY_POLICY = {
@@ -9,8 +10,8 @@ export const PRIVACY_POLICY = {
   intro: {
     titleAr: "مقدمة",
     titleEn: "Introduction",
-    descAr: "نحن في مدرسة نصر الدين نلتزم بحماية خصوصية مستخدمينا. توضح هذه السياسة كيفية جمع واستخدام وحماية المعلومات الشخصية التي تقدمها لنا عند استخدام منصتنا التعليمية.",
-    descEn: "At Nasr El-Din School, we are committed to protecting our users' privacy. This policy explains how we collect, use, and protect the personal information you provide when using our educational platform.",
+    descAr: "نحن في مدرسة الشهيد محي الدين نوح شاهين للتعليم الأساسي نلتزم بحماية خصوصية مستخدمينا. توضح هذه السياسة كيفية جمع واستخدام وحماية المعلومات الشخصية التي تقدمها لنا عند استخدام منصتنا التعليمية.",
+    descEn: "At Martyr Mohi El-Din Shaheen Basic Education School, we are committed to protecting our users' privacy. This policy explains how we collect, use, and protect the personal information you provide when using our educational platform.",
   },
 
   dataCollection: {
@@ -88,7 +89,7 @@ export const PRIVACY_POLICY = {
   contact: {
     titleAr: "تواصل معنا",
     titleEn: "Contact Us",
-    descAr: "إذا كانت لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى التواصل معنا عبر البريد الإلكتروني: privacy@nasreldin-school.com",
-    descEn: "If you have any questions about this privacy policy, please contact us at: privacy@nasreldin-school.com",
+    descAr: "إذا كانت لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى التواصل معنا. معلومات الاتصال غير منشورة رسميًا حاليًا.",
+    descEn: "If you have any questions about this privacy policy, please contact us. Contact information is not publicly published at this time.",
   },
 };

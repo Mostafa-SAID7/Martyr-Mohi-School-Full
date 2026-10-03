@@ -145,8 +145,8 @@ export default function AdminSetup() {
           <div className="mt-6 pt-5 border-t border-border">
             <p className="text-xs text-muted-foreground text-center">
               {lang === "ar"
-                ? "المفتاح الافتراضي: nasreldin-admin-2025 — غيّره من متغيرات البيئة ADMIN_SECRET"
-                : "Default key: nasreldin-admin-2025 — change via ADMIN_SECRET env var"}
+                ? "المفتاح الافتراضي: admin-martyr-mohi-2025 — غيّره من متغيرات البيئة ADMIN_SECRET"
+                : "Default key: admin-martyr-mohi-2025 — change via ADMIN_SECRET env var"}
             </p>
           </div>
         </div>

@@ -70,7 +70,7 @@ export function HeroSection() {
             <div className="relative">
               <img
                 src={heroImg}
-                alt={lang === "ar" ? "طلاب في فصل دراسي بمدرسة نصر الدين" : "Students at Nasr El-Din School"}
+                alt={lang === "ar" ? "مدرسة الشهيد محي الدين نوح شاهين للتعليم الأساسي" : "Martyr Mohi El-Din Shaheen School"}
                 width={1536}
                 height={1024}
                 className="relative rounded-2xl border border-border shadow-2xl w-full h-auto object-cover aspect-[4/3]"
