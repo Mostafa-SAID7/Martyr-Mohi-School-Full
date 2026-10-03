@@ -29,19 +29,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # v2 is long out of support (supported majors are v4 and v3); running an
+      # unsupported action risks a hard failure whenever GitHub retires it.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
 
+      # `analyze` finalizes the database, runs the queries AND uploads the
+      # resulting SARIF to the Security tab. A separate upload-sarif step is
+      # therefore both redundant and wrong: it points at results.sarif, which
+      # nothing in this job ever writes (analyze keeps its SARIF internal), so
+      # it can only fail with "Path does not exist". Uploading twice under the
+      # same category would also be rejected as a misconfiguration.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v4
         with:
           category: "/language:${{ matrix.language }}"
-
-      - name: Upload results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: results.sarif
-          wait-for-processing: true
