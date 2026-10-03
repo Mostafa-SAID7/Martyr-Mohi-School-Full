@@ -1,17 +1,20 @@
 {
-  "version": 2,
-  "buildCommand": "cd frontend && npm run build",
-  "outputDirectory": "frontend/dist",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "framework": "vite",
-  "root": "frontend",
   "env": {
     "VITE_CLERK_PUBLISHABLE_KEY": "@vite_clerk_publishable_key",
     "VITE_API_URL": "@vite_api_url"
   },
-  "rewrites": [
+  "headers": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
     }
   ]
 }
