@@ -12,7 +12,7 @@
     "preview": "npm run build && npm run serve"
   },
   "dependencies": {
-    "@clerk/clerk-react": "^4",
+    "@clerk/react": "^4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "^7.15.0",
