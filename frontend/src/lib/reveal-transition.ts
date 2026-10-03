@@ -58,13 +58,30 @@ export const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/** Duration is read back from CSS so there is a single source of truth. */
+/**
+ * Duration is read back from CSS so there is a single source of truth.
+ *
+ * The unit has to be parsed explicitly. Production minification rewrites
+ * `400ms` to the shorter `.4s`, and `parseFloat(".4s")` yields `0.4` — a
+ * thousandfold error that tears every one of these timers down ~80ms early.
+ * The consequence was invisible in dev (the raw source keeps `400ms`) and
+ * broke the deployed build: the icon spin was cancelled mid-rotation, the
+ * fallback colour crossfade was cut short, and the View Transitions deadline
+ * fired before the reveal had even finished.
+ */
 const cssDurationMs = (property: string, fallbackMs: number) => {
   try {
-    const ms = parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue(property),
-    );
-    return Number.isFinite(ms) ? ms : fallbackMs;
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue(property)
+      .trim();
+    if (!raw) return fallbackMs;
+
+    const value = parseFloat(raw);
+    if (!Number.isFinite(value)) return fallbackMs;
+
+    // `400ms` stays as-is; a bare `s` means the seconds must be scaled.
+    const isSeconds = raw.endsWith("s") && !raw.endsWith("ms");
+    return isSeconds ? value * 1000 : value;
   } catch {
     return fallbackMs;
   }
