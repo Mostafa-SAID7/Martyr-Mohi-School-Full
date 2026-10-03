@@ -3,14 +3,14 @@ import { useAuth as useClerkAuth } from "@clerk/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLang } from "@/contexts/LanguageContext";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
-import { api, MessageDto, ProfileDto } from "@/lib/apiClient";
+import { api, MessageDto } from "@/lib/apiClient";
 import { MessageSquare, Send, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks";
 
 export default function Messages() {
   const { getToken } = useClerkAuth();
